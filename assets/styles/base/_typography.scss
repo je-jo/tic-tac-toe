@@ -1,0 +1,19 @@
+/**
+ * Basic typography style for copy text
+ */
+
+h1,
+h2 {
+  line-height: 1.15;
+}
+
+h1 {
+  font-size: $fs-h1;
+  font-size: min(max(3rem, 5vw), $fs-h1);
+  text-align: center;
+}
+
+h2 {
+  font-size: $fs-h2;
+  font-size: min(max(1.5rem, 3vw), $fs-h2);
+}

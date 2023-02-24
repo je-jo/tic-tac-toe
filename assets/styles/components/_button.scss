@@ -1,0 +1,35 @@
+// -----------------------------------------------------------------------------
+// This file contains all styles related to the button component.
+// -----------------------------------------------------------------------------
+
+/// Set base button colors
+$button-bg-color: transparent;
+$button-text-color: $dark1;
+
+button {
+    display: inline-flex;
+    align-items: center;
+    align-self: start;
+    justify-content: center;
+    min-width: 10ch;
+    min-height: 44px;
+    padding: 0.1em 0.8em;
+    transition: $transition;
+    border: 1px solid currentColor;
+    border-radius: $border-radius;
+    background-color: $button-bg-color;
+    color: $button-text-color;
+    line-height: 1.1;
+    text-align: center;
+    text-transform: uppercase;
+    text-decoration: none;
+    cursor: pointer;
+    &:hover,
+    &:focus {
+        $button-bg-color: $dark2;
+        $button-text-color: $white;
+        background-color: $button-bg-color;
+        color: $button-text-color;
+        border-color: $button-bg-color;
+    }
+}

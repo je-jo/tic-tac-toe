@@ -1,0 +1,184 @@
+/*
+* Andy Bell's Modern CSS Reset modified my Stephanie Eckless
+* @link https://github.com/5t3ph/html-sass-jumpstart/blob/main/src/sass/_reset.scss
+*/
+/* Box sizing rules */
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+/* Remove default margin */
+body,
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  margin: 0;
+}
+
+p,
+li,
+h1,
+h2,
+h3,
+h4 {
+  word-break: break-word;
+}
+
+html,
+body {
+  overflow-x: hidden;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+/* Set core body defaults */
+body {
+  min-height: 100vh;
+  font-family: sans-serif;
+  font-size: 100%;
+  line-height: 1.5;
+  text-rendering: optimizeSpeed;
+}
+
+/* Make images easier to work with */
+img {
+  display: block;
+  max-width: 100%;
+}
+
+/* Inherit fonts for inputs and buttons */
+input,
+button,
+textarea,
+select {
+  font: inherit;
+}
+
+/* Remove all animations and transitions for people that prefer not to see them */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+  html {
+    scroll-behavior: initial;
+  }
+}
+* {
+  margin: 0;
+  padding: 0;
+}
+*:focus-visible {
+  outline: 3px dotted hsl(35deg, 95%, 53%);
+  outline-offset: 3px;
+}
+
+body {
+  display: grid;
+  grid-template-rows: auto 1fr auto;
+  background-color: hsl(69deg, 25%, 89%);
+  color: hsl(304deg, 22%, 15%);
+}
+
+/**
+ * Basic styles for links
+ */
+a {
+  color: inherit;
+  text-decoration: none;
+}
+a:hover {
+  color: hsl(35deg, 95%, 53%);
+  text-decoration: underline;
+  text-underline-offset: 6px;
+  transition: ease all 0.2s;
+}
+
+/* bitter-regular - latin */
+/* 
+@font-face {
+    font-family: 'Bitter';
+    font-style: normal;
+    font-weight: 400;
+    src: local(''),
+        url('../fonts/bitter-v32-latin-ext_latin-regular.woff2') format('woff2'),
+        url('../fonts/bitter-v32-latin-ext_latin-regular.woff') format('woff');
+    font-display: swap;
+} */
+/**
+ * Basic typography style for copy text
+ */
+h1,
+h2 {
+  line-height: 1.15;
+}
+
+h1 {
+  font-size: 4rem;
+  font-size: min(max(3rem, 5vw), 4rem);
+  text-align: center;
+}
+
+h2 {
+  font-size: 1.8rem;
+  font-size: min(max(1.5rem, 3vw), 1.8rem);
+}
+
+.wrapper {
+  width: min(100%, 150ch);
+  margin: 0 auto;
+  padding: 5vh clamp(0.3rem, 3vw, 3rem) 1rem;
+}
+
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
+}
+
+footer {
+  padding: 0.5rem 0;
+  text-align: center;
+}
+
+button {
+  display: inline-flex;
+  align-items: center;
+  align-self: start;
+  justify-content: center;
+  min-width: 10ch;
+  min-height: 44px;
+  padding: 0.1em 0.8em;
+  transition: ease all 0.2s;
+  border: 1px solid currentColor;
+  border-radius: 8px;
+  background-color: transparent;
+  color: hsl(304deg, 22%, 15%);
+  line-height: 1.1;
+  text-align: center;
+  text-transform: uppercase;
+  text-decoration: none;
+  cursor: pointer;
+}
+button:hover, button:focus {
+  background-color: hsl(308deg, 13%, 23%);
+  color: hsl(0deg, 0%, 100%);
+  border-color: hsl(308deg, 13%, 23%);
+}/*# sourceMappingURL=main.css.map */
