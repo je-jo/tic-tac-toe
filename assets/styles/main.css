@@ -78,6 +78,7 @@ select {
 * {
   margin: 0;
   padding: 0;
+  outline: 1px solid hsl(35, 95%, 53%);
 }
 *:focus-visible {
   outline: 3px dotted hsl(35, 95%, 53%);
