@@ -37,3 +37,18 @@ a {
     transition: $transition;
   }
 }
+
+
+
+#board {
+  padding: 1rem;
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 0.5rem;
+  padding: 1rem;
+  outline: 3px solid salmon;
+}
+
+#board > button {
+  font-size: 5rem;
+}

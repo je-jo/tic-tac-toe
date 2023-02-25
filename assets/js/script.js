@@ -1,8 +1,8 @@
 // module for gameboard object with array containing cells
 
-const gameboard = (() => {
+const gameBoard = (() => {
     const board = [];
-    const Cell = (marker, index) => ({ marker, index })
+    const Cell = (marker, index) => ({ marker, index });
     for (let i = 0; i <= 8; i += 1) {
         const cell = Cell("", i);
         board.push(cell);
@@ -10,53 +10,66 @@ const gameboard = (() => {
     return { board };
 })();
 
-console.log({gameboard});
+// player objects factory
 
-// factory for player objects
-
-const Player = (name, marker) => {
+const players = [];
+const Player = (name, marker, color) => {
     const getName = () => name;
     const getMarker = () => marker;
-    const placeMarker = (cell) => {
-        const activeCell = cell;
-        activeCell.marker = marker;
-    };
-    console.log({gameboard});
-    return { getName, getMarker, placeMarker };
+    const getColor = () => color;
+    return { getName, getMarker, getColor };
 };
-
-const player1 = Player("Player1", "X");
-const player2 = Player("Player2", "Y");
-
-console.log({player1, player2})
+const player1 = Player("Player 1", "X", "hotpink");
+const player2 = Player("Player 2", "O", "blue");
+players.push(player1, player2);
 
 // gameplay object
 
 const game = (() => {
+    let activePlayer = players[1];
     // switch active player
-    const getActivePlayer = () => player1
+    const switchActivePlayer = () => {
+        activePlayer = (activePlayer === players[1]) ? players[0] : players[1];
+        return activePlayer;
+    };
     // allow active player to place marker on empty cell
-    let placeMarker;
+    const placeMarker = (cell, player) => {
+        // console.log(`${player.getName()}'s turn...`)
+        const activeCell = cell;
+        // check if cell is empty
+        activeCell.marker = player.getMarker();
+        /* console.log(
+                `${player.getName()} is putting their marker ${player.getMarker()} on cell ${activeCell.index}.`
+            ); 
+        console.table(gameBoard.board) */
+    };
     // check for gameover
-    let isGameOver
-    return { getActivePlayer, placeMarker, isGameOver };
+    let isGameOver;
+    return { switchActivePlayer, placeMarker, isGameOver };
 })();
-
-console.log({game}) 
-
-
-
-
 
 // function to render gameboard object
 
-// const boardDisplay = document.getElementById("board");
-// const btn = document.createElement("button");
+const boardDisplay = document.getElementById("board");
 
-/* gameboard().board.forEach(element => {
-    console.log(element)
-}) */
 
-// function to allow players to add markers to empty cells on gameboard
+const renderBoard = () => {
+    for (let i = 0; i <= 8; i += 1) {
+        const btn = document.createElement("button");
+            boardDisplay.appendChild(btn)
+    }
+}
 
-// function to check for game over
+renderBoard();
+
+const allButtons = [...boardDisplay.querySelectorAll("button")]
+
+function handleClick(e) {
+    const activeIndex = allButtons.indexOf(e.currentTarget);
+    const activePlayer = game.switchActivePlayer();
+    game.placeMarker(gameBoard.board[activeIndex], activePlayer);
+    e.currentTarget.textContent = activePlayer.getMarker();
+}
+
+allButtons.forEach(btn => btn.addEventListener("click", handleClick, {once: true}))
+
