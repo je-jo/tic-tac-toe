@@ -4,12 +4,13 @@ const gameBoard = (() => {
     const board = [];
     const Cell = (marker, index) => ({ marker, index });
     for (let i = 0; i <= 8; i += 1) {
+        // eslint no-plus-plus
         const cell = Cell("", i);
         board.push(cell);
     }
     const clearMarkers = () => {
-        board.forEach((elem) => {
-            const clearedCell = elem;
+        board.forEach((cell) => {
+            const clearedCell = cell; // eslint no-param-reasign
             clearedCell.marker = "";
         });
     };
@@ -45,23 +46,39 @@ const game = (() => {
         // check if cell is empty
         activeCell.marker = player.getMarker();
         /* console.log(
-            `${player.getName()} is putting their marker ${player.getMarker()} on cell ${activeCell.index
-            }.`
-        );
-        console.table(gameBoard.board); */
+                `${player.getName()} is putting their marker ${player.getMarker()} on cell ${activeCell.index
+                }.`
+            );
+            console.table(gameBoard.board); */
     };
     const endGame = () => {
         gameBoard.clearMarkers();
     };
     // check for gameover
     const isGameOver = () => {
-        const winCondition = false;
+        const winCombos = [
+            [0, 1, 2],
+            [3, 4, 5],
+            [6, 7, 8],
+            [0, 3, 6],
+            [1, 4, 7],
+            [2, 5, 8],
+            [0, 4, 8],
+            [2, 4, 6]
+        ];
+        const potentialWins = winCombos.map((arr) =>
+            arr.map((elem) => gameBoard.board[elem].marker)
+        );
+
+        const winCondition = potentialWins.some((arr) =>
+            arr.every((elem) => elem === "X" || elem === "O")
+        );
         if (winCondition) {
-            // alert(`somebody won`);
+            alert(`somebody won`);
+            endGame();
             return "won";
         }
         if (gameBoard.board.every((elem) => elem.marker)) {
-            endGame();
             return "tie";
         }
     };
