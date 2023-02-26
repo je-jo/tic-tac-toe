@@ -34,27 +34,26 @@ players.push(player1, player2);
 
 const game = (() => {
     let activePlayer = players[1];
+
     // switch active player
     const switchActivePlayer = () => {
         activePlayer = activePlayer === players[1] ? players[0] : players[1];
         return activePlayer;
     };
+
     // allow active player to place marker on empty cell
     const placeMarker = (cell, player) => {
-        // console.log(`${player.getName()}'s turn...`);
         const activeCell = cell;
-        // check if cell is empty
-        activeCell.marker = player.getMarker();
-        /* console.log(
-                `${player.getName()} is putting their marker ${player.getMarker()} on cell ${activeCell.index
-                }.`
-            );
-            console.table(gameBoard.board); */
+        if (!activeCell.marker) { // check if cell is empty
+            activeCell.marker = player.getMarker();
+        }
     };
+
+    // check for gameover
     const endGame = () => {
         gameBoard.clearMarkers();
     };
-    // check for gameover
+    
     const isGameOver = () => {
         const winCombos = [
             [0, 1, 2],
@@ -64,23 +63,23 @@ const game = (() => {
             [1, 4, 7],
             [2, 5, 8],
             [0, 4, 8],
-            [2, 4, 6]
+            [2, 4, 6],
         ];
         const potentialWins = winCombos.map((arr) =>
             arr.map((elem) => gameBoard.board[elem].marker)
         );
-
-        const winCondition = potentialWins.some((arr) =>
-            arr.every((elem) => elem === "X" || elem === "O")
-        );
-        if (winCondition) {
-            alert(`somebody won`);
+        const isThreeInARow = () => potentialWins.some((arr) => arr.every((elem) => elem === "X"));
+        const isBoardFull = () => gameBoard.board.every((elem) => elem.marker);
+        if (isThreeInARow()) {
             endGame();
-            return "won";
+            console.log("Somebody Won!")
+            return "Somebody Won!"
+        } if (isBoardFull()) {
+            endGame();
+            console.log("It's a tie!")
+            return "It's a tie!"
         }
-        if (gameBoard.board.every((elem) => elem.marker)) {
-            return "tie";
-        }
+        return false
     };
     return { switchActivePlayer, placeMarker, isGameOver };
 })();
@@ -90,6 +89,7 @@ const game = (() => {
 const displayController = (() => {
     const boardDisplay = document.getElementById("board");
     const displayEndGameDialog = document.getElementById("endgame");
+    const closeMessage = document.getElementById("endgame-message");
     const closeBtn = document.getElementById("btn-close");
     closeBtn.addEventListener("click", () => {
         displayEndGameDialog.close();
@@ -111,7 +111,8 @@ const displayController = (() => {
             game.placeMarker(gameBoard.board[activeIndex], activePlayer);
             e.currentTarget.style.color = activePlayer.getColor();
             e.currentTarget.textContent = activePlayer.getMarker();
-            if (game.isGameOver() === "tie") {
+            if (game.isGameOver()) {
+                closeMessage.textContent = game.isGameOver();
                 displayEndGameDialog.showModal();
             }
         }
