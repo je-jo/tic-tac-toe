@@ -11,16 +11,19 @@ $accent: $orange;
 * {
   margin: 0;
   padding: 0;
+
   &:focus-visible {
     outline: 3px dotted $accent;
     outline-offset: 3px;
   }
-  outline: 1px solid $orange;
+
+  outline: 1px solid red;
 }
 
 body {
   display: grid;
   grid-template-rows: auto 1fr auto;
+  justify-content: center;
   background-color: $bg-color;
   color: $text-color;
 }
@@ -31,6 +34,7 @@ body {
 a {
   color: inherit;
   text-decoration: none;
+
   &:hover {
     color: $accent;
     text-decoration: underline;
@@ -39,18 +43,33 @@ a {
   }
 }
 
-
-
-#board {
-  padding: 1rem;
+.banner-top {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
-  gap: 0.5rem;
-  padding: 1rem;
-  outline: 3px solid salmon;
 }
 
-#board > button {
-  font-size: 5rem;
-  min-height: 8rem;
+.banner-bottom {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+}
+
+#board {
+  $width: 85vmin;
+  width: $width;
+  height: $width;
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  padding: 1rem;
+  margin: 1rem;
+  gap: 0.5rem;
+  outline: 3px solid salmon;
+  @media screen and (min-width: 36rem) {
+    $width: 70vmin;
+    width: $width;
+    height: $width;
+  }
+}
+
+#board>* {
+  width: auto;
 }

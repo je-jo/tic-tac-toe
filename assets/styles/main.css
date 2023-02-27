@@ -78,7 +78,7 @@ select {
 * {
   margin: 0;
   padding: 0;
-  outline: 1px solid hsl(35, 95%, 53%);
+  outline: 1px solid red;
 }
 *:focus-visible {
   outline: 3px dotted hsl(35, 95%, 53%);
@@ -88,6 +88,7 @@ select {
 body {
   display: grid;
   grid-template-rows: auto 1fr auto;
+  justify-content: center;
   background-color: hsl(69, 25%, 89%);
   color: hsl(304, 22%, 15%);
 }
@@ -106,16 +107,33 @@ a:hover {
   transition: ease all 0.2s;
 }
 
-#board {
-  padding: 1rem;
+.banner-top {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
-  gap: 0.5rem;
-  padding: 1rem;
-  outline: 3px solid salmon;
 }
 
-#board > button {
-  font-size: 5rem;
-  min-height: 8rem;
+.banner-bottom {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+}
+
+#board {
+  width: 85vmin;
+  height: 85vmin;
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  padding: 1rem;
+  margin: 1rem;
+  gap: 0.5rem;
+  outline: 3px solid salmon;
+}
+@media screen and (min-width: 36rem) {
+  #board {
+    width: 70vmin;
+    height: 70vmin;
+  }
+}
+
+#board > * {
+  width: auto;
 }/*# sourceMappingURL=main.css.map */
