@@ -27,7 +27,6 @@ const Player = (name, marker, color) => {
     let score = 0;
     const getScore = () => score;
     const addPoint = () => {
-        // eslint-disable-next-line no-param-reassign
         score += 1;
     };
     const setName = (value) => {
@@ -37,7 +36,7 @@ const Player = (name, marker, color) => {
         }
         return name;
     };
-   
+
     return { getName, getMarker, getColor, getScore, addPoint, setName };
 };
 const player1 = Player("Player 1", "X", "hsl(331, 74%, 67%)");
@@ -117,7 +116,6 @@ const game = (() => {
 
 // module for display controller with function to render gameboard object
 
-// eslint-disable-next-line no-unused-vars
 const displayController = (() => {
     // main display variables
     const startPage = document.getElementById("start-page");
@@ -166,76 +164,73 @@ const displayController = (() => {
         // 6. manipulate board display
         const boardDisplay = gameDisplay.getElementById("board");
         const renderBoard = () => {
-            // 6a. remove cells from previous game
+            // 6a. make whose turn message visible again
+            turnDisplay.style.color = "unset";
+            // 6b. remove cells from previous game
             while (boardDisplay.firstChild) {
                 boardDisplay.removeChild(boardDisplay.lastChild);
             }
-            // 6b. create 9 cells
+            // 6c. create 9 cells
             for (let i = 0; i <= 8; i += 1) {
                 const btn = document.createElement("button");
                 btn.textContent = "\u200B"; // to preserve height when there's no marker.
                 boardDisplay.appendChild(btn);
             }
             const allButtons = [...boardDisplay.querySelectorAll("button")];
-            // 6c. create function to place marker on board and check for gameover
+            // 6d. create function to place marker on board and check for gameover
             function handleClick(e) {
                 const activeIndex = allButtons.indexOf(e.currentTarget);
                 const activePlayer = game.switchActivePlayer();
-                const waitForClick = players.filter(player => player.getName() !== activePlayer.getName());
-                turnDisplay.textContent = `It's ${waitForClick[0].getName()}'s turn...`;
+                const waitForClick = players.find(player => player.getName() !== activePlayer.getName());
+                turnDisplay.textContent = `It's ${waitForClick.getName()}'s turn...`;
                 game.placeMarker(gameBoard.board[activeIndex], activePlayer);
                 e.currentTarget.style.color = activePlayer.getColor();
                 e.currentTarget.textContent = activePlayer.getMarker();
                 const gameOverMessage = game.isGameOver();
                 if (gameOverMessage) {
-                    turnDisplay.textContent = "\u200B";
+                    turnDisplay.style.color = "transparent";
                     updateDisplayScores();
                     closeMessage.textContent = gameOverMessage;
                     displayEndGameDialog.showModal();
                 }
             }
-            // 6d. add single use event listener for each cell
+            // 6e. add single use event listener for each cell
             allButtons.forEach((btn) =>
                 btn.addEventListener("click", handleClick, { once: true })
             );
         };
         // 7. reset the game display when closing endgame modal
         displayEndGameDialog.addEventListener("close", renderBoard);
-
         gamePage.appendChild(gameDisplay);
         renderBoard();
     };
 
     const renderStartPage = () => {
-        const templateInput = document.getElementById("template-input");
-        const inputContainer = document.getElementById("wrapper-input");
-        // create name inputs for players
-        players.forEach((player) => {
-            const input = templateInput.content.cloneNode(true);
-            // cloneNode references a doc fragment and not a regular node, child of a doc fragment is a regular node
-            const labelReference = input.children[0];
-            const labelText = labelReference.children[0];
-            const inputReference = labelReference.children[1];
-            // set matching ids and fors for input and label
-            inputReference.setAttribute(
-                "id",
-                `input-name-player-${player.getMarker()}`
-            );
-            labelReference.setAttribute("for", inputReference.getAttribute("id"));
-            inputReference.value = player.getName();
-            // label text is a span inside label, so changing text content doesn't overwrite input field
-            labelText.textContent = `${player.getName()} name: `;
-            const changeName = (e) => {
-                player.setName(e.currentTarget.value);
-            };
-            inputReference.addEventListener("input", changeName);
-            inputContainer.appendChild(input);
+        const templateStart = document.getElementById("template-start-page");
+        const startDisplay = templateStart.content.cloneNode(true);
+        const nameInputs = [...startDisplay.querySelectorAll("input[type='text']")];
+        const nameLabels = [...startDisplay.querySelectorAll(".name-labels")];
+        const nameLabelsText = [...startDisplay.querySelectorAll(".name-labels-text")];
+        // label text is a span inside label, so changing text content doesn't overwrite input field
+        nameInputs.forEach((input, index) => {
+            input.setAttribute("id", `input-name-player-${index}`);
+            input.setAttribute("value", players[index].getName());
+            input.addEventListener("input", (e) => {
+                players[index].setName(e.currentTarget.value);
+            });
         });
-        const btnStart = document.createElement("button");
-        btnStart.textContent = "Start game";
-        inputContainer.appendChild(btnStart);
+        nameLabels.forEach((label, index) => {
+            label.setAttribute("for", `input-name-player-${index}`);
+        });
+        nameLabelsText.forEach((text, index) => {
+            // eslint-disable-next-line no-param-reassign
+            text.textContent = `${players[index].getName()} name: `;
+        });
+        const btnStart = startDisplay.querySelector("button");
         btnStart.addEventListener("click", renderGamePage, { once: true });
+        startPage.appendChild(startDisplay);
     };
-
-    renderStartPage();
+    return { renderStartPage }
 })();
+
+displayController.renderStartPage();

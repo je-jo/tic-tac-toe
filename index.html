@@ -2,15 +2,15 @@
 <html lang="en">
 
 <head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="Play Tic Tac Toe game in your browser!">
-    <link rel="icon" type="image/png" sizes="32x32" href="assets/images/favicon-32x32.png">
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="description" content="Play Tic Tac Toe game in your browser!" />
+    <link rel="icon" type="image/png" sizes="32x32" href="assets/images/favicon-32x32.png" />
     <!--  <meta name="theme-color" content="#2f1e2e">
     <link rel="preload" href="assets/fonts/bitter-v32-latin-ext_latin-regular.woff2" as="font" type="font/woff2"
         crossorigin> -->
-    <link rel="stylesheet" href="assets/styles/main.css">
+    <link rel="stylesheet" href="assets/styles/main.css" />
     <script src="assets/js/script.js" defer></script>
     <title>Tic Tac Toe - The Odin Project</title>
 </head>
@@ -20,14 +20,16 @@
         <h1>Tic Tac Toe</h1>
     </header>
     <main class="wrapper">
-
-        <div class="" id="start-page">
-            <div id="wrapper-input" class="wrapper-flex">
-                <template id="template-input">
-                    <label for="input-name-player"><span>label here</span><input type="text"
-                            id="input-name-player"></label>
-                </template>
-            </div>
+        <div id="start-page">
+            <template id="template-start-page">
+                <div id="wrapper-input" class="wrapper-flex">
+                    <label for="" class="name-labels"><span class="name-labels-text"></span><input type="text"
+                            id="" /></label>
+                    <label for="" class="name-labels"><span class="name-labels-text"></span><input type="text"
+                            id="" /></label>
+                </div>
+                <button>Start Game</button>
+            </template>
         </div>
 
         <div id="game-page">
@@ -40,36 +42,32 @@
                 <p id="text-turn"></p>
                 <div id="board"></div>
                 <div class="wrapper-flex">
-                    <p><span class="display-score-names"></span>
+                    <p>
+                        <span class="display-score-names"></span>
                         <span class="display-score"></span>
                     </p>
-                    <p><span class="display-score-names"></span>
+                    <p>
+                        <span class="display-score-names"></span>
                         <span class="display-score"></span>
                     </p>
                 </div>
             </template>
-
-
         </div>
-        
-
-
-
-
 
         <dialog id="endgame">
             <p id="endgame-message">It's a tie!</p>
             <button id="btn-close">Close</button>
         </dialog>
     </main>
+
     <footer>
         <p>
             <small>
                 Coded and designed by
-                <a href="https://github.com/je-jo" target="_blank">Jelena Jovičić</a> for <a
-                    href="https://www.theodinproject.com/lessons/node-path-javascript-tic-tac-toe" target="_blank">The
-                    Odin
-                    Project</a>, 2023.
+                <a href="https://github.com/je-jo" target="_blank">Jelena Jovičić</a>
+                for
+                <a href="https://www.theodinproject.com/lessons/node-path-javascript-tic-tac-toe" target="_blank">The
+                    Odin Project</a>, 2023.
             </small>
         </p>
     </footer>
