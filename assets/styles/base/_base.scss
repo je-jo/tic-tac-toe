@@ -43,31 +43,33 @@ a {
   }
 }
 
-.banner-top {
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
+.wrapper-flex {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  margin: 1rem;
 }
 
-.banner-bottom {
-  display: grid;
-  grid-template-columns: repeat(4, 1fr);
+#top-banner {
+  padding: 2rem;
+  background-color: lightblue;
 }
 
 #board {
-  $width: 85vmin;
+  $width: min(85vmin, 42rem);
   width: $width;
   height: $width;
   display: grid;
   grid-template-columns: repeat(3, 1fr);
-  padding: 1rem;
-  margin: 1rem;
-  gap: 0.5rem;
-  outline: 3px solid salmon;
-  @media screen and (min-width: 36rem) {
+  padding: 2%;
+  // margin: 1rem;
+  gap: 2%;
+  background-color: salmon;
+ /* @media screen and (min-width: 36rem) {
     $width: 70vmin;
     width: $width;
     height: $width;
-  }
+  } */
 }
 
 #board>* {

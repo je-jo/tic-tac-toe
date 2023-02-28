@@ -20,21 +20,43 @@
         <h1>Tic Tac Toe</h1>
     </header>
     <main class="wrapper">
-        <div class="banner-top">
-            <span>Player 1</span>
-            <span>against</span>
-            <span>Player 2</span>
+
+        <div class="" id="start-page">
+            <div id="wrapper-input" class="wrapper-flex">
+                <template id="template-input">
+                    <label for="input-name-player"><span>label here</span><input type="text"
+                            id="input-name-player"></label>
+                </template>
+            </div>
+        </div>
+
+        <div id="game-page">
+            <template id="template-game-page">
+                <div id="top-banner" class="wrapper-flex">
+                    <h2></h2>
+                    <span>against</span>
+                    <h2></h2>
+                </div>
+                <p id="text-turn"></p>
+                <div id="board"></div>
+                <div class="wrapper-flex">
+                    <p><span class="display-score-names"></span>
+                        <span class="display-score"></span>
+                    </p>
+                    <p><span class="display-score-names"></span>
+                        <span class="display-score"></span>
+                    </p>
+                </div>
+            </template>
+
+
         </div>
         
-        <!-- <button id="start">Start game</button> -->
-        <div id="board">
-        </div>
-        <div class="banner-bottom">
-            <span>Player 1 score: </span>
-            <span>0</span>
-            <span>Player 2 score:</span>
-            <span>0</span>
-        </div>
+
+
+
+
+
         <dialog id="endgame">
             <p id="endgame-message">It's a tie!</p>
             <button id="btn-close">Close</button>
