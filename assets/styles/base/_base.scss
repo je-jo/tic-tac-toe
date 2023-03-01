@@ -3,9 +3,9 @@
 // -----------------------------------------------------------------------------
 
 /// Set base colors
-$bg-color: #fff;
-$text-color: #000;
-$accent: green;
+$bg-color: $dark1;
+$text-color:$light1;
+$accent: $green;
 
 
 * {
@@ -16,8 +16,6 @@ $accent: green;
     outline: 3px dotted $accent;
     outline-offset: 3px;
   }
-
-  outline: 1px solid blue;
 }
 
 body {

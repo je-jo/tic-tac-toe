@@ -166,13 +166,6 @@ const displayController = (() => {
         const textWaiting = gameDisplay.getElementById("text-waiting");
         textWaiting.textContent = `Waiting for ${players[0].getName()}'s move...`;
         // 5. Display score and update after every game over
-        const displayScoreNames = [
-            ...gameDisplay.querySelectorAll(".display-score-player"),
-        ];
-        displayScoreNames.forEach((name, index) => {
-            const displayName = name;
-            displayName.textContent = players[index].getName();
-        });
         const displayScores = [...gameDisplay.querySelectorAll(".display-score")];
         const updateDisplayScores = () => {
             displayScores.forEach((score, index) => {

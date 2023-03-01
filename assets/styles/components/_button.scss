@@ -4,7 +4,7 @@
 
 /// Set base button colors
 $button-bg-color: transparent;
-$button-text-color: $dark1;
+$button-text-color: $light1;
 
 button, .btn {
   display: inline-flex;
@@ -15,6 +15,7 @@ button, .btn {
   text-align: center;
   text-transform: uppercase;
   text-decoration: none;
+  border-radius: $border-radius;
   cursor: pointer;
   &:not(.cell) {
     align-self: start;
@@ -22,7 +23,7 @@ button, .btn {
     min-height: 44px;
     padding: 0.1em 0.8em;
     border: 1px solid currentColor;
-    border-radius: $border-radius;
+
     background-color: $button-bg-color;
     color: $button-text-color;
     &:hover,
@@ -33,16 +34,21 @@ button, .btn {
   }
 }
 
+.cell {
+  background-color: $dark2;
+  font-weight: 700;
+}
+
 
 .color-x {
-  color: maroon;
+  color: $lg-blue;
 }
 
 .color-o {
-  color: purple;
+  color: $yellow;
 }
 
 .winning-array {
-  background-color: red;
+  background-color: $accent;
   color: #fff;
 }

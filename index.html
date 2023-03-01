@@ -31,7 +31,7 @@
                                 value="Player 1" maxlength="20"></label>
                     <label for="input-name-o">Player 2 name:<input type="text" id="input-name-o"
                                 value="Player 2" maxlength="20"></label>
-                <fieldset>
+                <fieldset class="color-o">
                     <legend>Player 2 type:</legend>
                     <input type="radio" id="human" name="type" value="human" checked><label for="human" class="btn">Human</label>
                     <input type="radio" id="random" name="type" value="random"><label for="random" class="btn">AI (Easy)</label>
@@ -46,11 +46,9 @@
             <div id="board" class="board"></div>
             <div>
                 <p>
-                    <span class="display-score-player"></span>
-                    <span class="display-score"></span>
+                    <span class="display-score h2 color-x"></span>
                     <span>:</span>
-                    <span class="display-score"></span>
-                    <span class="display-score-player"></span>
+                    <span class="display-score h2 color-o"></span>
                 </p>
             </div>
         </template>

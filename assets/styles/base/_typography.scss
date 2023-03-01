@@ -8,13 +8,20 @@ h1, .h1 {
   font-family: $monospace-stack;
 }
 
-h2 {
+h2, .h2 {
   font-size: $fs-h2;
-  font-size: min(max(1.8rem, 5vw), $fs-h2);
+  font-size: min(max(1.3rem, 5vw), $fs-h2);
 }
 
-p, label, legend {
+/* p {
   font-size: $fs-text;
+} */
+
+.display-player-name {
+  text-decoration: underline;
+  text-decoration-thickness: 3px;
+  text-underline-offset: 3px;
+  text-decoration-color: $lg-blue;
 }
 
 
