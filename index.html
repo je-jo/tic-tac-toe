@@ -20,44 +20,51 @@
         <h1>Tic Tac Toe</h1>
     </header>
     <main class="wrapper">
-        <div id="start-page">
-            <template id="template-start-page">
-                <div id="wrapper-input" class="wrapper-flex">
-                    <label for="" class="name-labels"><span class="name-labels-text"></span><input type="text"
-                            id="" /></label>
-                    <label for="" class="name-labels"><span class="name-labels-text"></span><input type="text"
-                            id="" /></label>
-                </div>
-                <button>Start Game</button>
-            </template>
-        </div>
+        <div id="start-page"></div>
 
-        <div id="game-page">
-            <template id="template-game-page">
-                <div id="top-banner" class="wrapper-flex">
-                    <h2></h2>
-                    <span>against</span>
-                    <h2></h2>
-                </div>
-                <p id="text-turn"></p>
-                <div id="board"></div>
-                <div class="wrapper-flex">
-                    <p>
-                        <span class="display-score-names"></span>
-                        <span class="display-score"></span>
-                    </p>
-                    <p>
-                        <span class="display-score-names"></span>
-                        <span class="display-score"></span>
-                    </p>
-                </div>
-            </template>
-        </div>
+        <div id="game-page"></div>
 
-        <dialog id="endgame">
-            <p id="endgame-message">It's a tie!</p>
-            <button id="btn-close">Close</button>
+        <template id="template-start-page">
+            <h2>Name your players:</h2>
+            <form id="form-input-names" action="">
+                <div>
+                    <span>X<label for="input-name-x">Player 1 name:<input type="text" id="input-name-x"
+                                value="Player 1"></label></span>
+                    <span>O<label for="input-name-o">Player 2 name:<input type="text" id="input-name-o"
+                                value="Player 2"></label></span>
+                </div>
+                <fieldset>
+                    <legend>Player 2 type:</legend>
+                    <label for="human">Human</label><input type="radio" id="human" name="type" value="human" checked>
+                    <label for="random">AI (Easy)</label><input type="radio" id="random" name="type" value="random">
+                </fieldset>
+                <button type="submit">Start Game</button>
+            </form>
+        </template>
+
+        <template id="template-game-page">
+            <h2><span class="display-player-name"></span><span> against </span><span class="display-player-name"></span></h2>
+            <p id="text-waiting"></p>
+            <div id="board" class="board"></div>
+            <div>
+                <p>
+                    <span class="display-score-player"></span>
+                    <span class="display-score"></span>
+                </p>
+                <p>
+                    <span class="display-score-player"></span>
+                    <span class="display-score"></span>
+                </p>
+            </div>
+        </template>
+
+        <dialog id="dialog-end-game">
+            <div class="dialog-body">
+                <p id="text-end-game"></p>
+                <button id="btn-end-game">OK</button>
+            </div>
         </dialog>
+
     </main>
 
     <footer>

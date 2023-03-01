@@ -78,10 +78,10 @@ select {
 * {
   margin: 0;
   padding: 0;
-  outline: 1px solid red;
+  outline: 1px solid blue;
 }
 *:focus-visible {
-  outline: 3px dotted hsl(35, 95%, 53%);
+  outline: 3px dotted green;
   outline-offset: 3px;
 }
 
@@ -89,8 +89,8 @@ body {
   display: grid;
   grid-template-rows: auto 1fr auto;
   justify-content: center;
-  background-color: hsl(69, 25%, 89%);
-  color: hsl(304, 22%, 15%);
+  background-color: #fff;
+  color: #000;
 }
 
 /**
@@ -101,39 +101,28 @@ a {
   text-decoration: none;
 }
 a:hover {
-  color: hsl(35, 95%, 53%);
+  color: green;
   text-decoration: underline;
   text-underline-offset: 6px;
   transition: ease all 0.2s;
 }
 
-.wrapper-flex {
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: space-between;
-  margin: 1rem;
-}
-
-#top-banner {
-  padding: 2rem;
-  background-color: lightblue;
-}
-
-#board {
+.board {
   width: min(85vmin, 42rem);
   height: min(85vmin, 42rem);
   display: grid;
   grid-template-columns: repeat(3, 1fr);
-  padding: 2%;
-  gap: 2%;
-  background-color: salmon;
-  /* @media screen and (min-width: 36rem) {
-     $width: 70vmin;
-     width: $width;
-     height: $width;
-   } */
 }
 
-#board > * {
-  width: auto;
+.color-x {
+  color: maroon;
+}
+
+.color-o {
+  color: purple;
+}
+
+.winning-array {
+  background-color: red;
+  color: #fff;
 }/*# sourceMappingURL=main.css.map */

@@ -3,9 +3,9 @@
 // -----------------------------------------------------------------------------
 
 /// Set base colors
-$bg-color: $light1;
-$text-color: $dark1;
-$accent: $orange;
+$bg-color: #fff;
+$text-color: #000;
+$accent: green;
 
 
 * {
@@ -17,7 +17,7 @@ $accent: $orange;
     outline-offset: 3px;
   }
 
-  outline: 1px solid red;
+  outline: 1px solid blue;
 }
 
 body {
@@ -43,35 +43,23 @@ a {
   }
 }
 
-.wrapper-flex {
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: space-between;
-  margin: 1rem;
-}
-
-#top-banner {
-  padding: 2rem;
-  background-color: lightblue;
-}
-
-#board {
+.board {
   $width: min(85vmin, 42rem);
   width: $width;
   height: $width;
   display: grid;
   grid-template-columns: repeat(3, 1fr);
-  padding: 2%;
-  // margin: 1rem;
-  gap: 2%;
-  background-color: salmon;
- /* @media screen and (min-width: 36rem) {
-    $width: 70vmin;
-    width: $width;
-    height: $width;
-  } */
 }
 
-#board>* {
-  width: auto;
+.color-x {
+  color: maroon;
+}
+
+.color-o {
+  color: purple;
+}
+
+.winning-array {
+  background-color: red;
+  color: #fff;
 }

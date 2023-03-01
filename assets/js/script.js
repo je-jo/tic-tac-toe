@@ -4,13 +4,12 @@ const gameBoard = (() => {
     const board = [];
     const Cell = (marker, index) => ({ marker, index });
     for (let i = 0; i <= 8; i += 1) {
-        // eslint no-plus-plus
         const cell = Cell("", i);
         board.push(cell);
     }
     const clearBoard = () => {
         board.forEach((cell) => {
-            const clearedCell = cell; // eslint no-param-reasign
+            const clearedCell = cell; // because of eslint no-param-reasign
             clearedCell.marker = "";
         });
     };
@@ -26,6 +25,8 @@ const Player = (name, marker, color) => {
     const getColor = () => color;
     let score = 0;
     const getScore = () => score;
+    let type = "human";
+    const getType = () => type;
     const addPoint = () => {
         score += 1;
     };
@@ -36,11 +37,23 @@ const Player = (name, marker, color) => {
         }
         return name;
     };
+    const setType = (value) => {
+        type = value;
+    };
 
-    return { getName, getMarker, getColor, getScore, addPoint, setName };
+    return {
+        getName,
+        getMarker,
+        getColor,
+        getScore,
+        getType,
+        addPoint,
+        setName,
+        setType,
+    };
 };
-const player1 = Player("Player 1", "X", "hsl(331, 74%, 67%)");
-const player2 = Player("Player 2", "O", "hsl(195, 95%, 48%)");
+const player1 = Player("Player 1", "X", "color-x");
+const player2 = Player("Player 2", "O", "color-o");
 players.push(player1, player2);
 
 // gameplay object
@@ -53,7 +66,7 @@ const game = (() => {
         return activePlayer;
     };
 
-    // allow player to place marker on empty cell
+    // allow player to place marker on cell
     const placeMarker = (cell, player) => {
         const activeCell = cell;
         if (!activeCell.marker) {
@@ -61,6 +74,7 @@ const game = (() => {
             activeCell.marker = player.getMarker();
         }
     };
+
     // check for gameover
 
     // 1. define winning combinations (index of cells)
@@ -87,10 +101,13 @@ const game = (() => {
     const isBoardFull = () => gameBoard.board.every((elem) => elem.marker);
     // 4. On every cell click, run a function to check if any of the winning conditions are true
     const isGameOver = () => {
+        let endGameMessage;
+        let winningArray;
         if (isThreeInARowIndex() !== -1) {
+            const winningIndex = isThreeInARowIndex();
             // 5. If there is a winning array, extract the following from it:
             // 5a. the winning marker to get to the winning player
-            const winningMarker = potentialWins()[isThreeInARowIndex()][0];
+            const winningMarker = potentialWins()[winningIndex][0];
             // 5b. the winning player
             const winner = players.find(
                 (player) => player.getMarker() === winningMarker
@@ -98,21 +115,20 @@ const game = (() => {
             // 5c. increase winners score
             winner.addPoint();
             // 5d. and the indexes of winning cells for styling
-            /* const winningArray = winCombos[isThreeInARowIndex()];
-                  console.log(winningArray) */
-            // 6. clear the game board and return winning message
+            winningArray = winCombos[winningIndex];
+            // 6. clear the game board and set winning message
             gameBoard.clearBoard();
-            return `${winner.getName()} Won!`;
+            endGameMessage = `${winner.getName()} Won!`;
+
         }
         if (isBoardFull()) {
             gameBoard.clearBoard();
-            return "It's a tie!";
+            endGameMessage = `It's a tie!`;
         }
-        return false;
+        return { endGameMessage, winningArray };
     };
     return { switchActivePlayer, placeMarker, isGameOver };
 })();
-
 
 // module for display controller with function to render gameboard object
 
@@ -120,13 +136,12 @@ const displayController = (() => {
     // main display variables
     const startPage = document.getElementById("start-page");
     const gamePage = document.getElementById("game-page");
-    const displayEndGameDialog = document.getElementById("endgame");
-    const closeMessage = document.getElementById("endgame-message");
-    const closeBtn = document.getElementById("btn-close");
-    closeBtn.addEventListener("click", () => {
-        displayEndGameDialog.close();
+    const displayDialogEndGame = document.getElementById("dialog-end-game");
+    const textDialogEndGame = document.getElementById("text-end-game");
+    const btnDialogClose = document.getElementById("btn-end-game");
+    btnDialogClose.addEventListener("click", () => {
+        displayDialogEndGame.close();
     });
-
 
     const renderGamePage = () => {
         // 1. remove content from start "page"
@@ -137,17 +152,22 @@ const displayController = (() => {
         const templateGame = document.getElementById("template-game-page");
         const gameDisplay = templateGame.content.cloneNode(true);
         // 3. Display player names in top banner
-        const namesDisplay = [...gameDisplay.querySelectorAll("h2")];
+        const namesDisplay = [
+            ...gameDisplay.querySelectorAll(".display-player-name"),
+        ];
         namesDisplay.forEach((name, index) => {
             const displayName = name;
             displayName.textContent = players[index].getName();
+            if (players[index].getType() === "random") {
+                displayName.textContent += "(AI)";
+            }
         });
         // 4. display whose turn it is
-        const turnDisplay = gameDisplay.getElementById("text-turn");
-        turnDisplay.textContent = `It's ${players[0].getName()}'s turn...`;
+        const textWaiting = gameDisplay.getElementById("text-waiting");
+        textWaiting.textContent = `Waiting for ${players[0].getName()}'s move...`;
         // 5. Display score and update after every game over
         const displayScoreNames = [
-            ...gameDisplay.querySelectorAll(".display-score-names"),
+            ...gameDisplay.querySelectorAll(".display-score-player"),
         ];
         displayScoreNames.forEach((name, index) => {
             const displayName = name;
@@ -159,13 +179,13 @@ const displayController = (() => {
                 const displayScore = score;
                 displayScore.textContent = players[index].getScore();
             });
-        }
+        };
         updateDisplayScores();
         // 6. manipulate board display
         const boardDisplay = gameDisplay.getElementById("board");
         const renderBoard = () => {
-            // 6a. make whose turn message visible again
-            turnDisplay.style.color = "unset";
+            // 6a. make waiting message visible again
+            textWaiting.style.color = "unset";
             // 6b. remove cells from previous game
             while (boardDisplay.firstChild) {
                 boardDisplay.removeChild(boardDisplay.lastChild);
@@ -177,30 +197,50 @@ const displayController = (() => {
                 boardDisplay.appendChild(btn);
             }
             const allButtons = [...boardDisplay.querySelectorAll("button")];
-            // 6d. create function to place marker on board and check for gameover
-            function handleClick(e) {
+            // 6d. create function to update cell visually
+            const updateCell = (index, player) => {
+                const activeCell = allButtons[index];
+                activeCell.classList.add(player.getColor());
+                activeCell.textContent = player.getMarker();
+            };
+            // 6e. create function to update board on end game
+            const updateBoard = (text, winnerArr) => {
+                    if (winnerArr) {
+                        const winnerButtons = allButtons.filter((_btn, index) => winnerArr.includes(index));
+                        winnerButtons.forEach(btn => {
+                            btn.classList.add("winning-array")
+                        })
+                    }
+                    textWaiting.style.color = "transparent";
+                    updateDisplayScores();
+                    textDialogEndGame.textContent = text;
+                    displayDialogEndGame.showModal();
+                
+            }
+            // 6f. create function to place marker on board and check for gameover
+            const handleClick = (e) => {
                 const activeIndex = allButtons.indexOf(e.currentTarget);
                 const activePlayer = game.switchActivePlayer();
-                const waitForClick = players.find(player => player.getName() !== activePlayer.getName());
-                turnDisplay.textContent = `It's ${waitForClick.getName()}'s turn...`;
+                const waitForClick = players.find(
+                    (player) => player.getName() !== activePlayer.getName()
+                );
+                textWaiting.textContent = `Waiting for ${waitForClick.getName()}'s move...`;
                 game.placeMarker(gameBoard.board[activeIndex], activePlayer);
-                e.currentTarget.style.color = activePlayer.getColor();
-                e.currentTarget.textContent = activePlayer.getMarker();
-                const gameOverMessage = game.isGameOver();
-                if (gameOverMessage) {
-                    turnDisplay.style.color = "transparent";
-                    updateDisplayScores();
-                    closeMessage.textContent = gameOverMessage;
-                    displayEndGameDialog.showModal();
+                updateCell(activeIndex, activePlayer);
+                const isGameOver = game.isGameOver();
+                const displayEndGameMessage = isGameOver.endGameMessage;
+                const displayWinningArray = isGameOver.winningArray;
+                if (displayEndGameMessage) {
+                    updateBoard(displayEndGameMessage, displayWinningArray);
                 }
-            }
-            // 6e. add single use event listener for each cell
+            };
+            // 6g. add single use event listener for each cell
             allButtons.forEach((btn) =>
                 btn.addEventListener("click", handleClick, { once: true })
             );
         };
         // 7. reset the game display when closing endgame modal
-        displayEndGameDialog.addEventListener("close", renderBoard);
+        displayDialogEndGame.addEventListener("close", renderBoard);
         gamePage.appendChild(gameDisplay);
         renderBoard();
     };
@@ -208,29 +248,38 @@ const displayController = (() => {
     const renderStartPage = () => {
         const templateStart = document.getElementById("template-start-page");
         const startDisplay = templateStart.content.cloneNode(true);
-        const nameInputs = [...startDisplay.querySelectorAll("input[type='text']")];
-        const nameLabels = [...startDisplay.querySelectorAll(".name-labels")];
-        const nameLabelsText = [...startDisplay.querySelectorAll(".name-labels-text")];
-        // label text is a span inside label, so changing text content doesn't overwrite input field
-        nameInputs.forEach((input, index) => {
-            input.setAttribute("id", `input-name-player-${index}`);
-            input.setAttribute("value", players[index].getName());
-            input.addEventListener("input", (e) => {
-                players[index].setName(e.currentTarget.value);
-            });
-        });
-        nameLabels.forEach((label, index) => {
-            label.setAttribute("for", `input-name-player-${index}`);
-        });
-        nameLabelsText.forEach((text, index) => {
-            // eslint-disable-next-line no-param-reassign
-            text.textContent = `${players[index].getName()} name: `;
-        });
-        const btnStart = startDisplay.querySelector("button");
-        btnStart.addEventListener("click", renderGamePage, { once: true });
+
+        const form = startDisplay.getElementById("form-input-names");
+        const nameInputs = [...form.querySelectorAll("input[type='text']")];
+        const typeInputs = [...form.querySelectorAll("input[type='radio']")];
+        form.addEventListener(
+            "submit",
+            (e) => {
+                nameInputs.forEach((input, index) => {
+                    players[index].setName(input.value);
+                });
+                let opponentType;
+                typeInputs.forEach((radio) => {
+                    if (radio.checked) {
+                        opponentType = radio.value;
+                    }
+                });
+                players[1].setType(opponentType);
+                renderGamePage();
+                e.preventDefault();
+            },
+            { once: true }
+        );
+
         startPage.appendChild(startDisplay);
     };
-    return { renderStartPage }
+
+    return { renderStartPage };
 })();
 
 displayController.renderStartPage();
+
+const setAi = document.getElementById("random");
+setAi.addEventListener("click", () => {
+    alert("AI out of order")
+})
