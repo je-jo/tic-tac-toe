@@ -2,13 +2,6 @@
 // This file contains CSS helper classes.
 // -----------------------------------------------------------------------------
 
-
-.wrapper {
-  width: min(100%, 150ch);
-  margin: 0 auto;
-  padding: 5vh clamp(0.3rem, 3vw, 3rem) 1rem;
-}
-
 .sr-only {
   position: absolute;
   width: 1px;

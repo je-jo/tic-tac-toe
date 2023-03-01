@@ -171,7 +171,7 @@ const displayController = (() => {
         ];
         displayScoreNames.forEach((name, index) => {
             const displayName = name;
-            displayName.textContent = `${players[index].getName()}'s score: `;
+            displayName.textContent = players[index].getName();
         });
         const displayScores = [...gameDisplay.querySelectorAll(".display-score")];
         const updateDisplayScores = () => {
@@ -185,7 +185,7 @@ const displayController = (() => {
         const boardDisplay = gameDisplay.getElementById("board");
         const renderBoard = () => {
             // 6a. make waiting message visible again
-            textWaiting.style.color = "unset";
+            textWaiting.style.visibility = "visible";
             // 6b. remove cells from previous game
             while (boardDisplay.firstChild) {
                 boardDisplay.removeChild(boardDisplay.lastChild);
@@ -193,6 +193,7 @@ const displayController = (() => {
             // 6c. create 9 cells
             for (let i = 0; i <= 8; i += 1) {
                 const btn = document.createElement("button");
+                btn.classList.add("h1", "cell");
                 btn.textContent = "\u200B"; // to preserve height when there's no marker.
                 boardDisplay.appendChild(btn);
             }
@@ -211,7 +212,7 @@ const displayController = (() => {
                             btn.classList.add("winning-array")
                         })
                     }
-                    textWaiting.style.color = "transparent";
+                    textWaiting.style.visibility = "hidden";
                     updateDisplayScores();
                     textDialogEndGame.textContent = text;
                     displayDialogEndGame.showModal();
@@ -278,8 +279,3 @@ const displayController = (() => {
 })();
 
 displayController.renderStartPage();
-
-const setAi = document.getElementById("random");
-setAi.addEventListener("click", () => {
-    alert("AI out of order")
-})

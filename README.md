@@ -58,7 +58,7 @@ The project's purpose is to get familiar with the concepts of modules and factor
 - [Building A House From The Inside Out](https://www.ayweb.dev/blog/building-a-house-from-the-inside-out) - Example of code organization.
 - [How To Lint and Format Code with ESLint in Visual Studio Code](https://www.digitalocean.com/community/tutorials/linting-and-formatting-with-eslint-in-vs-code) - A tutorial for setting up ESLint for a project.
 - [7-1 pattern boilerplate](https://github.com/KittyGiraudel/sass-boilerplate/tree/master/stylesheets) - A boilerplate for 7-1 Sass Architecture.
-- [HTML / Sass Jumpstart]() - Mostly plucked some sensible values (font sizes, spacings, buttons, etc) from here and a reset file.
+- [HTML / Sass Jumpstart](https://github.com/5t3ph/html-sass-jumpstart) - Mostly plucked some sensible values (font sizes, spacings, buttons, etc) from here and a reset file.
 - [google web fonts helper](https://gwfh.mranftl.com/fonts) - A Hassle-Free Way to Self-Host Google Fonts.
 - [Paraiso colors](https://github.com/je-jo/paraiso-colors)
 - [Favicon Generator](https://favicon.io/favicon-generator/)

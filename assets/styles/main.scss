@@ -12,18 +12,21 @@
 
 // 3. Base stuff
 @import
-  'base/base';
-  //// 'base/fonts',
-  ////'base/typography',
-  //// 'base/helpers';
+  'base/base',
+  'base/fonts',
+  'base/typography',
+  'base/helpers';
 
 // 4. Layout-related sections
-//// @import
-  //// 'layout/page';
+@import
+  'layout/page',
+  'layout/form',
+  'layout/board';
 
 // 5. Components
-//// @import
-  //// 'components/button';
+@import
+  'components/button',
+  'components/dialog';
 
 // 6. Page-specific styles
 // @import

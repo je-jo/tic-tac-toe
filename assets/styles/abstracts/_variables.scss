@@ -7,7 +7,7 @@
 /// Regular font family
 
 $sans-serif-stack: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen, Ubuntu, Cantarell, "Open Sans", "Helvetica Neue", sans-serif;
-
+$monospace-stack: Consolas, "Andale Mono WT", "Andale Mono", "Lucida Console", "Lucida Sans Typewriter", "DejaVu Sans Mono", "Bitstream Vera Sans Mono", "Liberation Mono", "Nimbus Mono L", Monaco, "Courier New", Courier, monospace;
 
 /// Paraiso Colors
 
@@ -30,15 +30,12 @@ $pink: hsl(331, 74%, 67%);
 $white: hsl(0, 0%, 100%);
 
 /// Font sizes
-$fs-h1:  4rem;
-$fs-h2: 1.8rem;
-$fs-lead: 1.125rem;
+$fs-h1:  4.2rem;
+$fs-h2: 2.5rem;
+$fs-text: 1.15rem;
 
 
 ///Design variables
-$min-card-width: 17rem;
 $border-radius: 8px;
 $transition: ease all 0.2s;
 $box-shadow: 0 3px 5px change-color($dark1, $alpha: 0.28);
-$status-color: $red;
-$box-shadow-status: $box-shadow, inset calc($border-radius / 3) 0px 0px 0px $status-color;

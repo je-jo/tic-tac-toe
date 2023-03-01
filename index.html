@@ -19,41 +19,38 @@
     <header>
         <h1>Tic Tac Toe</h1>
     </header>
-    <main class="wrapper">
-        <div id="start-page"></div>
+    <main>
+        <div id="start-page" class="wrapper"></div>
 
-        <div id="game-page"></div>
+        <div id="game-page" class="wrapper"></div>
 
         <template id="template-start-page">
             <h2>Name your players:</h2>
             <form id="form-input-names" action="">
-                <div>
-                    <span>X<label for="input-name-x">Player 1 name:<input type="text" id="input-name-x"
-                                value="Player 1"></label></span>
-                    <span>O<label for="input-name-o">Player 2 name:<input type="text" id="input-name-o"
-                                value="Player 2"></label></span>
-                </div>
+                    <label for="input-name-x">Player 1 name:<input type="text" id="input-name-x"
+                                value="Player 1" maxlength="20"></label>
+                    <label for="input-name-o">Player 2 name:<input type="text" id="input-name-o"
+                                value="Player 2" maxlength="20"></label>
                 <fieldset>
                     <legend>Player 2 type:</legend>
-                    <label for="human">Human</label><input type="radio" id="human" name="type" value="human" checked>
-                    <label for="random">AI (Easy)</label><input type="radio" id="random" name="type" value="random">
+                    <input type="radio" id="human" name="type" value="human" checked><label for="human" class="btn">Human</label>
+                    <input type="radio" id="random" name="type" value="random"><label for="random" class="btn">AI (Easy)</label>
                 </fieldset>
                 <button type="submit">Start Game</button>
             </form>
         </template>
 
         <template id="template-game-page">
-            <h2><span class="display-player-name"></span><span> against </span><span class="display-player-name"></span></h2>
+            <h2><span class="display-player-name"></span><span><small> against </small></span><span class="display-player-name"></span></h2>
             <p id="text-waiting"></p>
             <div id="board" class="board"></div>
             <div>
                 <p>
                     <span class="display-score-player"></span>
                     <span class="display-score"></span>
-                </p>
-                <p>
-                    <span class="display-score-player"></span>
+                    <span>:</span>
                     <span class="display-score"></span>
+                    <span class="display-score-player"></span>
                 </p>
             </div>
         </template>

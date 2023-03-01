@@ -6,35 +6,43 @@
 $button-bg-color: transparent;
 $button-text-color: $dark1;
 
-button {
-    padding: 1rem;
-    min-height: 156px;
-}
-
-.btn {
-    display: inline-flex;
-    align-items: center;
+button, .btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  transition: $transition;
+  line-height: 1.1;
+  text-align: center;
+  text-transform: uppercase;
+  text-decoration: none;
+  cursor: pointer;
+  &:not(.cell) {
     align-self: start;
-    justify-content: center;
-    // min-width: 10ch;
-    // min-height: 44px;
+    min-width: 10ch;
+    min-height: 44px;
     padding: 0.1em 0.8em;
-    transition: $transition;
     border: 1px solid currentColor;
     border-radius: $border-radius;
     background-color: $button-bg-color;
     color: $button-text-color;
-    line-height: 1.1;
-    text-align: center;
-    text-transform: uppercase;
-    text-decoration: none;
-    cursor: pointer;
-    /* &:hover,
+    &:hover,
     &:focus {
-        $button-bg-color: $dark2;
-        $button-text-color: $white;
-        background-color: $button-bg-color;
-        color: $button-text-color;
-        border-color: $button-bg-color;
-    } */
+      background-color: $accent;
+      color: $button-text-color;
+    }
+  }
+}
+
+
+.color-x {
+  color: maroon;
+}
+
+.color-o {
+  color: purple;
+}
+
+.winning-array {
+  background-color: red;
+  color: #fff;
 }

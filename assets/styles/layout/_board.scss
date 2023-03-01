@@ -1,0 +1,9 @@
+.board {
+    $width: min(80vmin, 27rem);
+    width: $width;
+    height: $width;
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    padding: 1vmax;
+    gap: 1vmax;
+  }

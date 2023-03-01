@@ -2,8 +2,20 @@
 // This file contains all styles related to the layout of the page.
 // -----------------------------------------------------------------------------
 
-footer {
+header, footer {
     padding: 0.5rem 0;
     text-align: center;
 }
 
+main {
+    width: min(100%, 120ch);
+    margin: 0 auto;
+    padding: 2vh 1rem;
+}
+
+.wrapper {
+    display: grid;
+    justify-content: center;
+    justify-items: center;
+    gap: 1rem;
+}
