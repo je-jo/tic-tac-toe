@@ -14,3 +14,25 @@
   border: 0;
 }
 
+.wrapper {
+  display: grid;
+  // justify-content: center;
+  justify-items: center;
+  gap: 1rem;
+}
+
+.banner {
+  display: grid;
+  grid-template-columns: 1fr auto 1fr;
+  place-items: center;
+  gap: 1rem;
+}
+
+.color-x {
+  color: $color-x;
+}
+
+.color-o {
+  color: $color-o;
+}
+

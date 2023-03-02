@@ -2,16 +2,41 @@
 // This file contains all @font-face declarations, if any.
 // -----------------------------------------------------------------------------
 
-/* bitter-regular - latin */
-
-
-/* 
+/* raleway-regular - latin_latin-ext */
 @font-face {
-    font-family: 'Bitter';
+    font-display: swap;
+    /* Check https://developer.mozilla.org/en-US/docs/Web/CSS/@font-face/font-display for other options. */
+    font-family: 'Raleway';
     font-style: normal;
     font-weight: 400;
-    src: local(''),
-        url('../fonts/bitter-v32-latin-ext_latin-regular.woff2') format('woff2'),
-        url('../fonts/bitter-v32-latin-ext_latin-regular.woff') format('woff');
+    src: url('../fonts/raleway-v28-latin_latin-ext-regular.woff2') format('woff2'),
+        /* Chrome 36+, Opera 23+, Firefox 39+ */
+        url('../fonts/raleway-v28-latin_latin-ext-regular.woff') format('woff');
+    /* Chrome 5+, Firefox 3.6+, IE 9+, Safari 5.1+ */
+}
+
+/* fredoka-regular - latin_latin-ext */
+@font-face {
     font-display: swap;
-} */
+    /* Check https://developer.mozilla.org/en-US/docs/Web/CSS/@font-face/font-display for other options. */
+    font-family: 'Fredoka';
+    font-style: normal;
+    font-weight: 400;
+    src: url('../fonts/fredoka-v9-latin_latin-ext-regular.woff2') format('woff2'),
+        /* Chrome 36+, Opera 23+, Firefox 39+ */
+        url('../fonts/fredoka-v9-latin_latin-ext-regular.woff') format('woff');
+    /* Chrome 5+, Firefox 3.6+, IE 9+, Safari 5.1+ */
+}
+
+/* fredoka-700 - latin_latin-ext */
+@font-face {
+    font-display: swap;
+    /* Check https://developer.mozilla.org/en-US/docs/Web/CSS/@font-face/font-display for other options. */
+    font-family: 'Fredoka';
+    font-style: normal;
+    font-weight: 700;
+    src: url('../fonts/fredoka-v9-latin_latin-ext-700.woff2') format('woff2'),
+        /* Chrome 36+, Opera 23+, Firefox 39+ */
+        url('../fonts/fredoka-v9-latin_latin-ext-700.woff') format('woff');
+    /* Chrome 5+, Firefox 3.6+, IE 9+, Safari 5.1+ */
+}

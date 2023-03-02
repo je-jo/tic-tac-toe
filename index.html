@@ -7,9 +7,9 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta name="description" content="Play Tic Tac Toe game in your browser!" />
     <link rel="icon" type="image/png" sizes="32x32" href="assets/images/favicon-32x32.png" />
-    <!--  <meta name="theme-color" content="#2f1e2e">
-    <link rel="preload" href="assets/fonts/bitter-v32-latin-ext_latin-regular.woff2" as="font" type="font/woff2"
-        crossorigin> -->
+    <meta name="theme-color" content="#2f1e2e">
+    <link rel="preload" href="assets/fonts/fredoka-v9-latin_latin-ext-700.woff2" as="font" type="font/woff2"
+        crossorigin>
     <link rel="stylesheet" href="assets/styles/main.css" />
     <script src="assets/js/script.js" defer></script>
     <title>Tic Tac Toe - The Odin Project</title>
@@ -27,35 +27,42 @@
         <template id="template-start-page">
             <h2>Name your players:</h2>
             <form id="form-input-names" action="">
-                    <label for="input-name-x">Player 1 name:<input type="text" id="input-name-x"
-                                value="Player 1" maxlength="20"></label>
-                    <label for="input-name-o">Player 2 name:<input type="text" id="input-name-o"
-                                value="Player 2" maxlength="20"></label>
-                <fieldset class="color-o">
-                    <legend>Player 2 type:</legend>
-                    <input type="radio" id="human" name="type" value="human" checked><label for="human" class="btn">Human</label>
-                    <input type="radio" id="random" name="type" value="random"><label for="random" class="btn">AI (Easy)</label>
-                </fieldset>
+                <label for="input-name-x">Player 1 name: <input type="text" id="input-name-x" value="Player 1"
+                        maxlength="20"></label>
+                <div>
+                    <label for="input-name-o">Player 2 name: <input type="text" id="input-name-o" value="Player 2"
+                            maxlength="20"></label>
+                    <fieldset>
+                        <legend>Player 2 type:</legend>
+                        <input type="radio" id="human" name="type" value="human" checked><label for="human"
+                            class="btn">Human</label>
+                        <input type="radio" id="random" name="type" value="random"><label for="random" class="btn">AI
+                            (Easy)</label>
+                    </fieldset>
+                </div>
                 <button type="submit">Start Game</button>
             </form>
         </template>
 
         <template id="template-game-page">
-            <h2><span class="display-player-name"></span><span><small> against </small></span><span class="display-player-name"></span></h2>
-            <p id="text-waiting"></p>
-            <div id="board" class="board"></div>
+            <h2><span class="display-player-name"></span><span><small>&nbsp;&nbsp;against&nbsp;&nbsp;</small></span><span
+                    class="display-player-name"></span></h2>
             <div>
-                <p>
-                    <span class="display-score h2 color-x"></span>
+                <p id="text-waiting"></p>
+                <div id="board" class="board"></div>
+            </div>
+            <div>
+                <p class="banner">
+                    <span class="display-score h1 color-x"></span>
                     <span>:</span>
-                    <span class="display-score h2 color-o"></span>
+                    <span class="display-score h1 color-o"></span>
                 </p>
             </div>
         </template>
 
         <dialog id="dialog-end-game">
             <div class="dialog-body">
-                <p id="text-end-game"></p>
+                <p id="text-end-game" class="lead"></p>
                 <button id="btn-end-game">OK</button>
             </div>
         </dialog>

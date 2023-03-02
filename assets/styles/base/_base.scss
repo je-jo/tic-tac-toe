@@ -5,7 +5,11 @@
 /// Set base colors
 $bg-color: $dark1;
 $text-color:$light1;
-$accent: $green;
+$color-x: $lg-blue;
+$color-o: $orange;
+$accent: $red;
+$board-width: min(80vmin, 27rem);
+
 
 
 * {
@@ -13,8 +17,8 @@ $accent: $green;
   padding: 0;
 
   &:focus-visible {
-    outline: 3px dotted $accent;
-    outline-offset: 3px;
+    outline: 2px dotted $accent;
+    outline-offset: 2px;
   }
 }
 
@@ -40,6 +44,3 @@ a {
     transition: $transition;
   }
 }
-
-
-

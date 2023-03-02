@@ -1,7 +1,6 @@
 .board {
-    $width: min(80vmin, 27rem);
-    width: $width;
-    height: $width;
+    width: $board-width;
+    height: $board-width;
     display: grid;
     grid-template-columns: repeat(3, 1fr);
     padding: 1vmax;

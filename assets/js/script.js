@@ -144,10 +144,12 @@ const displayController = (() => {
     });
 
     const renderGamePage = () => {
-        // 1. remove content from start "page"
+        // 1. remove content from start "page" and hide header
         while (startPage.firstChild) {
             startPage.removeChild(startPage.lastChild);
         }
+        const header = document.querySelector("h1");
+        header.classList.add("sr-only");
         // 2. create game "page" from template
         const templateGame = document.getElementById("template-game-page");
         const gameDisplay = templateGame.content.cloneNode(true);

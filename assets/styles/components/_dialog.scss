@@ -1,16 +1,24 @@
 dialog {
     margin: auto;
+    min-width: 100%;
+    text-align: center;
     background-color: $bg-color;
     color: $text-color;
-    border-radius: $border-radius;
+    border: none;
     transition: $transition;
+    opacity: 0.95;
 }
 
 .dialog-body {
     display: grid;
+    place-items: center;
     gap: 0.8rem;
     margin: auto;
-    padding: 1.5rem;
+    padding: 2.5rem;
+
+    &>button {
+        min-width: 10ch;
+    }
 }
 
 dialog::backdrop {

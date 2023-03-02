@@ -5,23 +5,39 @@
 h1, .h1 {
   font-size: $fs-h1;
   font-size: min(max(3rem, 5vw), $fs-h1);
-  font-family: $monospace-stack;
+  font-family: $ff-accent;
+  font-weight: 700;
+  text-align: center;
 }
 
 h2, .h2 {
   font-size: $fs-h2;
   font-size: min(max(1.3rem, 5vw), $fs-h2);
+  margin-bottom: 2.5rem;
+  font-weight: 400;
+  text-align: center;
 }
 
-/* p {
+p {
+  text-align: center;
+} 
+
+.lead {
   font-size: $fs-text;
-} */
+}
 
 .display-player-name {
   text-decoration: underline;
-  text-decoration-thickness: 3px;
-  text-underline-offset: 3px;
-  text-decoration-color: $lg-blue;
+  text-decoration-thickness: 12px;
+  text-underline-offset: -6px;
+  text-decoration-skip-ink: none;
+
+  &:first-child {
+    text-decoration-color: change-color($color: $color-x, $alpha: 0.4)
+  }
+  &:last-child {
+    text-decoration-color: change-color($color: $color-o, $alpha: 0.4)
+  }
 }
 
 

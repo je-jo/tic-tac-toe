@@ -80,14 +80,14 @@ select {
   padding: 0;
 }
 *:focus-visible {
-  outline: 3px dotted hsl(153, 43%, 50%);
-  outline-offset: 3px;
+  outline: 2px dotted hsl(5, 83%, 64%);
+  outline-offset: 2px;
 }
 
 body {
   display: grid;
   grid-template-rows: auto 1fr auto;
-  font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen, Ubuntu, Cantarell, "Open Sans", "Helvetica Neue", sans-serif;
+  font-family: "Raleway", system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen, Ubuntu, Cantarell, "Open Sans", "Helvetica Neue", sans-serif;
   background-color: hsl(304, 22%, 15%);
   color: hsl(69, 25%, 89%);
 }
@@ -100,45 +100,81 @@ a {
   text-decoration: none;
 }
 a:hover {
-  color: hsl(153, 43%, 50%);
+  color: hsl(5, 83%, 64%);
   text-decoration: underline;
   text-underline-offset: 6px;
   transition: ease all 0.1s;
 }
 
-/* bitter-regular - latin */
-/* 
+/* raleway-regular - latin_latin-ext */
 @font-face {
-    font-family: 'Bitter';
-    font-style: normal;
-    font-weight: 400;
-    src: local(''),
-        url('../fonts/bitter-v32-latin-ext_latin-regular.woff2') format('woff2'),
-        url('../fonts/bitter-v32-latin-ext_latin-regular.woff') format('woff');
-    font-display: swap;
-} */
+  font-display: swap;
+  /* Check https://developer.mozilla.org/en-US/docs/Web/CSS/@font-face/font-display for other options. */
+  font-family: "Raleway";
+  font-style: normal;
+  font-weight: 400;
+  src: url("../fonts/raleway-v28-latin_latin-ext-regular.woff2") format("woff2"), url("../fonts/raleway-v28-latin_latin-ext-regular.woff") format("woff");
+  /* Chrome 5+, Firefox 3.6+, IE 9+, Safari 5.1+ */
+}
+/* fredoka-regular - latin_latin-ext */
+@font-face {
+  font-display: swap;
+  /* Check https://developer.mozilla.org/en-US/docs/Web/CSS/@font-face/font-display for other options. */
+  font-family: "Fredoka";
+  font-style: normal;
+  font-weight: 400;
+  src: url("../fonts/fredoka-v9-latin_latin-ext-regular.woff2") format("woff2"), url("../fonts/fredoka-v9-latin_latin-ext-regular.woff") format("woff");
+  /* Chrome 5+, Firefox 3.6+, IE 9+, Safari 5.1+ */
+}
+/* fredoka-700 - latin_latin-ext */
+@font-face {
+  font-display: swap;
+  /* Check https://developer.mozilla.org/en-US/docs/Web/CSS/@font-face/font-display for other options. */
+  font-family: "Fredoka";
+  font-style: normal;
+  font-weight: 700;
+  src: url("../fonts/fredoka-v9-latin_latin-ext-700.woff2") format("woff2"), url("../fonts/fredoka-v9-latin_latin-ext-700.woff") format("woff");
+  /* Chrome 5+, Firefox 3.6+, IE 9+, Safari 5.1+ */
+}
 /**
  * Basic typography style for copy text
  */
 h1, .h1 {
   font-size: 4.2rem;
   font-size: min(max(3rem, 5vw), 4.2rem);
-  font-family: Consolas, "Andale Mono WT", "Andale Mono", "Lucida Console", "Lucida Sans Typewriter", "DejaVu Sans Mono", "Bitstream Vera Sans Mono", "Liberation Mono", "Nimbus Mono L", Monaco, "Courier New", Courier, monospace;
+  font-family: "Fredoka", "Raleway", system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen, Ubuntu, Cantarell, "Open Sans", "Helvetica Neue", sans-serif;
+  font-weight: 700;
+  text-align: center;
 }
 
 h2, .h2 {
   font-size: 2.2rem;
   font-size: min(max(1.3rem, 5vw), 2.2rem);
+  margin-bottom: 2.5rem;
+  font-weight: 400;
+  text-align: center;
 }
 
-/* p {
-  font-size: $fs-text;
-} */
+p {
+  text-align: center;
+}
+
+.lead {
+  font-size: 1.15rem;
+}
+
 .display-player-name {
   text-decoration: underline;
-  text-decoration-thickness: 3px;
-  text-underline-offset: 3px;
-  text-decoration-color: hsl(177, 47%, 56%);
+  text-decoration-thickness: 12px;
+  text-underline-offset: -6px;
+  -webkit-text-decoration-skip-ink: none;
+          text-decoration-skip-ink: none;
+}
+.display-player-name:first-child {
+  text-decoration-color: rgba(90, 196, 190, 0.4);
+}
+.display-player-name:last-child {
+  text-decoration-color: rgba(249, 154, 21, 0.4);
 }
 
 .sr-only {
@@ -153,8 +189,29 @@ h2, .h2 {
   border: 0;
 }
 
-header, footer {
-  padding: 0.5rem 0;
+.wrapper {
+  display: grid;
+  justify-items: center;
+  gap: 1rem;
+}
+
+.banner {
+  display: grid;
+  grid-template-columns: 1fr auto 1fr;
+  place-items: center;
+  gap: 1rem;
+}
+
+.color-x {
+  color: hsl(177, 47%, 56%);
+}
+
+.color-o {
+  color: hsl(35, 95%, 53%);
+}
+
+header {
+  padding: 1.8vmin 0;
   text-align: center;
 }
 
@@ -164,38 +221,55 @@ main {
   padding: 2vh 1rem;
 }
 
-.wrapper {
-  display: grid;
-  justify-content: center;
-  justify-items: center;
-  gap: 1rem;
+footer {
+  padding: 0.5rem 0;
+  text-align: center;
 }
 
 form {
   display: grid;
-  grid-template-columns: repeat(2, 1fr);
-  row-gap: 3rem;
-  -moz-column-gap: 1.5rem;
-       column-gap: 1.5rem;
+  row-gap: 2rem;
+  -moz-column-gap: 1rem;
+       column-gap: 1rem;
+  padding: 1.5rem;
+  border-radius: 16px;
+  background-color: hsl(308, 13%, 23%);
+}
+@media (min-width: 48rem) {
+  form {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+form > * {
   padding: 1rem;
-  border: 2px dotted hsl(153, 43%, 50%);
+  border: 1px dashed hsl(340, 4%, 45%);
+  border-radius: 8px;
+}
+
+@media (min-width: 48rem) {
+  form > button {
+    grid-column: span 2;
+  }
+}
+
+fieldset {
+  display: grid;
+  gap: 0.8rem;
+  margin-top: 2rem;
+  border: none;
 }
 
 input[type=text] {
   width: 100%;
   height: 2.25em;
+  margin-top: 0.8rem;
   padding: 0.25em 0.5em;
   line-height: 1;
   color: hsl(304, 22%, 15%);
   background-color: hsl(351, 3%, 54%);
   border: 2px solid hsl(351, 3%, 54%);
   border-radius: 4px;
-}
-
-fieldset {
-  grid-column: 1/-1;
-  text-align: right;
-  border: none;
 }
 
 input[type=radio] {
@@ -211,12 +285,13 @@ input[type=radio]:focus { /*gets outline with label*/
 }
 
 input[type=radio]:focus + label {
-  outline: 3px dotted hsl(153, 43%, 50%);
-  outline-offset: 3px;
+  outline: 2px dotted hsl(35, 95%, 53%);
+  outline-offset: 2px;
 }
 
 input[type=radio]:checked + label {
-  background-color: rgb(254, 197, 27);
+  background-color: hsl(35, 95%, 53%);
+  color: hsl(304, 22%, 15%);
 }
 
 form > button {
@@ -232,63 +307,63 @@ form > button {
   gap: 1vmax;
 }
 
-button, .btn {
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  transition: ease all 0.1s;
-  line-height: 1.1;
-  text-align: center;
-  text-transform: uppercase;
-  text-decoration: none;
-  border-radius: 8px;
-  cursor: pointer;
-}
-button:not(.cell), .btn:not(.cell) {
-  align-self: start;
-  min-width: 10ch;
+button,
+.btn {
+  display: grid;
+  place-items: center;
   min-height: 44px;
   padding: 0.1em 0.8em;
+  text-transform: uppercase;
   border: 1px solid currentColor;
+  border-radius: 8px;
+  color: hsl(69, 25%, 89%);
   background-color: transparent;
-  color: hsl(69, 25%, 89%);
+  transition: ease all 0.1s;
+  cursor: pointer;
 }
-button:not(.cell):hover, button:not(.cell):focus, .btn:not(.cell):hover, .btn:not(.cell):focus {
-  background-color: hsl(153, 43%, 50%);
-  color: hsl(69, 25%, 89%);
+button.cell,
+.btn.cell {
+  padding: unset;
+  border: unset;
+  background-color: hsl(314, 9%, 28%);
+  box-shadow: inset 0 -8px 0 hsl(308, 13%, 23%);
+}
+button.cell:hover, button.cell:focus,
+.btn.cell:hover,
+.btn.cell:focus {
+  background-color: hsl(340, 4%, 45%);
+}
+button:hover, button:focus,
+.btn:hover,
+.btn:focus {
+  background-color: hsl(5, 83%, 64%);
 }
 
-.cell {
-  background-color: hsl(308, 13%, 23%);
-  font-weight: 700;
-}
-
-.color-x {
-  color: hsl(177, 47%, 56%);
-}
-
-.color-o {
-  color: rgb(254, 197, 27);
-}
-
-.winning-array {
-  background-color: hsl(153, 43%, 50%);
+.cell.winning-array {
+  background-color: hsl(5, 83%, 64%);
   color: #fff;
 }
 
 dialog {
   margin: auto;
+  min-width: 100%;
+  text-align: center;
   background-color: hsl(304, 22%, 15%);
   color: hsl(69, 25%, 89%);
-  border-radius: 8px;
+  border: none;
   transition: ease all 0.1s;
+  opacity: 0.95;
 }
 
 .dialog-body {
   display: grid;
+  place-items: center;
   gap: 0.8rem;
   margin: auto;
-  padding: 1.5rem;
+  padding: 2.5rem;
+}
+.dialog-body > button {
+  min-width: 10ch;
 }
 
 dialog::backdrop {
