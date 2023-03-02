@@ -39,6 +39,5 @@ button,
 }
 
 .cell.winning-array {
-  background-color: $accent;
-  color: #fff;
+  outline: 3px solid currentColor;
 } 

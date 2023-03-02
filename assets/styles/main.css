@@ -340,8 +340,7 @@ button:hover, button:focus,
 }
 
 .cell.winning-array {
-  background-color: hsl(5, 83%, 64%);
-  color: #fff;
+  outline: 3px solid currentColor;
 }
 
 dialog {
