@@ -4,7 +4,7 @@ form {
     column-gap: 1rem;
     padding: 1.5rem;
     border-radius: 2 * $border-radius;
-    background-color: $dark2;
+
     @media(min-width: 48rem) {
         grid-template-columns: repeat(2, 1fr);
     }
@@ -12,7 +12,8 @@ form {
 
 form > * {
     padding: 1rem;
-    border: 1px dashed $dark4;
+    background-color: $dark2;
+    // border: 1px dashed $dark4;
     border-radius: $border-radius;
 }
 
