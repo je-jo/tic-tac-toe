@@ -60,11 +60,13 @@ players.push(player1, player2);
 
 const game = (() => {
     // switch active player
-    let activePlayer = players[1];
+    /* let activePlayer = players[1];
     const switchActivePlayer = () => {
         activePlayer = activePlayer === players[1] ? players[0] : players[1];
         return activePlayer;
-    };
+    }; */
+
+    const switchActivePlayer = (active) => active === players[0] ? players[1] : players[0];
 
     // allow player to place marker on cell
     const placeMarker = (cell, player) => {
@@ -164,9 +166,10 @@ const displayController = (() => {
                 displayName.textContent += "(AI)";
             }
         });
-        // 4. display whose turn it is
+        // 4. set first player to players[0] and display whose turn it is 
         const textWaiting = gameDisplay.getElementById("text-waiting");
-        textWaiting.textContent = `Waiting for ${players[0].getName()}'s move...`;
+        // textWaiting.textContent = `Waiting for ${players[0]}'s turn`;
+        let roundsActivePlayer = players[1]; // switched to players[0] on first board render, switch on each board render
         // 5. Display score and update after every game over
         const displayScores = [...gameDisplay.querySelectorAll(".display-score")];
         const updateDisplayScores = () => {
@@ -175,17 +178,26 @@ const displayController = (() => {
                 displayScore.textContent = players[index].getScore();
             });
         };
-        updateDisplayScores();
+        updateDisplayScores(); // invoke on first render to display initial zeros
         // 6. manipulate board display
         const boardDisplay = gameDisplay.getElementById("board");
         const renderBoard = () => {
-            // 6a. make waiting message visible again
-            textWaiting.style.visibility = "visible";
-            // 6b. remove cells from previous game
+            // 6a. switch first player from previous round
+            roundsActivePlayer = game.switchActivePlayer(roundsActivePlayer);
+            let activePlayer = roundsActivePlayer;
+            const isAi = () => {
+                if (activePlayer.getType() === "random") {
+                    alert(`random play!`)
+                }
+            }
+            isAi();
+            // 6b. display who is first to play
+            textWaiting.textContent = `Waiting for ${activePlayer.getName()}'s move...`;
+            // 6c. remove cells from previous game
             while (boardDisplay.firstChild) {
                 boardDisplay.removeChild(boardDisplay.lastChild);
             }
-            // 6c. create 9 cells
+            // 6d. create 9 new  cells
             for (let i = 0; i <= 8; i += 1) {
                 const btn = document.createElement("button");
                 btn.classList.add("h1", "cell");
@@ -193,13 +205,13 @@ const displayController = (() => {
                 boardDisplay.appendChild(btn);
             }
             const allButtons = [...boardDisplay.querySelectorAll("button")];
-            // 6d. create function to update cell visually
+            // 6e. create function to update cell visually
             const updateCell = (index, player) => {
                 const activeCell = allButtons[index];
                 activeCell.classList.add(player.getColor());
                 activeCell.textContent = player.getMarker();
             };
-            // 6e. create function to update board on end game
+            // 6f. create function to update board on end game
             const updateBoard = (text, winnerArr) => {
                     if (winnerArr) {
                         const winnerButtons = allButtons.filter((_btn, index) => winnerArr.includes(index));
@@ -207,22 +219,22 @@ const displayController = (() => {
                             btn.classList.add("winning-array")
                         })
                     }
-                    textWaiting.style.visibility = "hidden";
+                    textWaiting.textContent = "\u200B"; // hide whose turn it is because game is over
                     updateDisplayScores();
                     textDialogEndGame.textContent = text;
                     displayDialogEndGame.showModal();
                 
             }
-            // 6f. create function to place marker on board and check for gameover
+            // 6g. create function to place marker on board and check for gameover
             const handleClick = (e) => {
                 const activeIndex = allButtons.indexOf(e.currentTarget);
-                const activePlayer = game.switchActivePlayer();
-                const waitForClick = players.find(
-                    (player) => player.getName() !== activePlayer.getName()
-                );
-                textWaiting.textContent = `Waiting for ${waitForClick.getName()}'s move...`;
                 game.placeMarker(gameBoard.board[activeIndex], activePlayer);
                 updateCell(activeIndex, activePlayer);
+                activePlayer = game.switchActivePlayer(activePlayer);
+                /* const waitForClick = players.find(
+                    (player) => player.getName() !== activePlayer.getName()
+                ); */
+                textWaiting.textContent = `Waiting for ${activePlayer.getName()}'s move...`;
                 const isGameOver = game.isGameOver();
                 const displayEndGameMessage = isGameOver.endGameMessage;
                 const displayWinningArray = isGameOver.winningArray;
@@ -230,7 +242,7 @@ const displayController = (() => {
                     updateBoard(displayEndGameMessage, displayWinningArray);
                 }
             };
-            // 6g. add single use event listener for each cell
+            // 6h. add single use event listener for each cell
             allButtons.forEach((btn) =>
                 btn.addEventListener("click", handleClick, { once: true })
             );

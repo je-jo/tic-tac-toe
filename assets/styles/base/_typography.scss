@@ -12,8 +12,9 @@ h1, .h1 {
 
 h2, .h2 {
   font-size: $fs-h2;
-  font-size: min(max(1.3rem, 5vw), $fs-h2);
-  margin-bottom: 2.5rem;
+  font-size: min(max(1.4rem, 5vw), $fs-h2);
+  font-family: $ff-accent;
+  margin-bottom: 0.8em;
   font-weight: 400;
   text-align: center;
 }
