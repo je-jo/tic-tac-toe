@@ -31,7 +31,8 @@ const Player = (name, marker, color) => {
         score += 1;
     };
     const setName = (value) => {
-        if (value) { // if empty leave default
+        if (value) {
+            // if empty leave default
             // eslint-disable-next-line no-param-reassign
             name = value;
         }
@@ -39,6 +40,12 @@ const Player = (name, marker, color) => {
     };
     const setType = (value) => {
         type = value;
+    };
+    const placeMarker = (index) => {
+        const activeCell = gameBoard.board[index];
+        if (!activeCell.marker) {
+            activeCell.marker = marker;
+        }
     };
 
     return {
@@ -50,6 +57,7 @@ const Player = (name, marker, color) => {
         addPoint,
         setName,
         setType,
+        placeMarker,
     };
 };
 const player1 = Player("Player 1", "X", "color-x");
@@ -59,9 +67,7 @@ players.push(player1, player2);
 // gameplay object
 
 const game = (() => {
-    // switch active player
-    const switchActivePlayer = (active) =>
-        active === players[0] ? players[1] : players[0];
+
 
     // check for gameover
 
@@ -89,8 +95,8 @@ const game = (() => {
     const isBoardFull = () => gameBoard.board.every((elem) => elem.marker);
     // 4. A function to check if any of the winning conditions are true, if true return end game message and winning array
     const isGameOver = () => {
-        let endGameMessage;
-        let winningArray;
+        let endGameMessage = false;
+        let winningArray = false;
         if (isThreeInARowIndex() !== -1) {
             const winningIndex = isThreeInARowIndex();
             // 5. If there is a winning array, extract the following from it:
@@ -104,12 +110,10 @@ const game = (() => {
             winner.addPoint();
             // 5d. and the indexes of winning cells for styling
             winningArray = winCombos[winningIndex];
-            // 6. clear the game board and set winning message
-            gameBoard.clearBoard();
             endGameMessage = `${winner.getName()} Won!`;
         }
         if (isBoardFull()) {
-            gameBoard.clearBoard();
+
             endGameMessage = `It's a tie!`;
         }
         return { endGameMessage, winningArray };
@@ -117,31 +121,60 @@ const game = (() => {
 
 
 
-    // allow player to place marker on cell
-    const placeMarker = (cell, player) => {
-        const activeCell = cell;
-        if (!activeCell.marker) {
-            // check if cell is empty
-            activeCell.marker = player.getMarker(); 
-        }
-    };
 
+
+    // switch active player
+    const switchActivePlayer = (active) =>
+        active === players[0] ? players[1] : players[0];
+
+    let globalActivePlayer = player1;
+    let activePlayer = globalActivePlayer;
+
+
+    const startNewRound = () => {
+        gameBoard.clearBoard();
+        globalActivePlayer = switchActivePlayer(globalActivePlayer);
+        activePlayer = globalActivePlayer;
+    }
 
     // play random free cell and return index for styling
-    const playRandomCell = () => {
+    const getRandomCell = () => {
         const emptyCells = gameBoard.board.filter((cell) => cell.marker === "");
         const randomFromEmptyCells = Math.floor(Math.random() * emptyCells.length);
         const randomIndex = emptyCells[randomFromEmptyCells].index;
-        const player = players[1];
-        placeMarker(gameBoard.board[randomIndex], player);
         return randomIndex;
+    };
+
+    const makeMove = (player, index) => {
+        player.placeMarker(index);
+        const checkEndGameObject = isGameOver();
+        const { endGameMessage } = checkEndGameObject;
+        const { winningArray } = checkEndGameObject;
+        if (endGameMessage) {
+            startNewRound();
+        } else {
+            activePlayer = switchActivePlayer(player);
+        }
+        // if new active player is random, play random cell
+        let randomIndex;
+        if (activePlayer.getType() === "random") {
+            randomIndex = getRandomCell();
+            makeMove(player2, randomIndex);
+        }
+        console.table(gameBoard.board)
+        return { endGameMessage, winningArray, randomIndex }
     }
+
+    const getActivePlayer = () => activePlayer;
+
 
     return {
         switchActivePlayer,
         isGameOver,
-        placeMarker,
-        playRandomCell
+        getRandomCell,
+        startNewRound,
+        makeMove,
+        getActivePlayer
     };
 })();
 
@@ -151,19 +184,20 @@ const displayController = (() => {
     // main display variables
     const startPage = document.getElementById("start-page");
     const gamePage = document.getElementById("game-page");
-    const displayDialogEndGame = document.getElementById("dialog-end-game");
-    const textDialogEndGame = document.getElementById("text-end-game");
-    const btnDialogClose = document.getElementById("btn-end-game");
-    btnDialogClose.addEventListener("click", () => {
-        displayDialogEndGame.close();
-    });
 
     const renderGamePage = () => {
+
+        const header = document.querySelector("h1");
+        const displayDialogEndGame = document.getElementById("dialog-end-game");
+        const textDialogEndGame = document.getElementById("text-end-game");
+        const btnDialogClose = document.getElementById("btn-end-game");
+        btnDialogClose.addEventListener("click", () => {
+            displayDialogEndGame.close();
+        });
         // 1. remove content from start "page" and hide header
         while (startPage.firstChild) {
             startPage.removeChild(startPage.lastChild);
         }
-        const header = document.querySelector("h1");
         header.classList.add("sr-only");
         // 2. create game "page" from template
         const templateGame = document.getElementById("template-game-page");
@@ -179,9 +213,9 @@ const displayController = (() => {
                 displayName.textContent += "(AI)";
             }
         });
-        // 4. set first player to players[0] and display whose turn it is
+        // 4. display currently active player
         const textWaiting = gameDisplay.getElementById("text-waiting");
-        let roundsActivePlayer = players[1]; // switched to players[0] on first board render, switched on each board render
+        textWaiting.textContent = `Waiting for ${game.getActivePlayer().getName()}'s move...`
         // 5. Display score and update after every game over
         const displayScores = [...gameDisplay.querySelectorAll(".display-score")];
         const updateDisplayScores = () => {
@@ -194,11 +228,7 @@ const displayController = (() => {
         // 6. manipulate board display
         const boardDisplay = gameDisplay.getElementById("board");
         const renderBoard = () => {
-            // 6a. switch first player from previous round
-            roundsActivePlayer = game.switchActivePlayer(roundsActivePlayer);
-            let activePlayer = roundsActivePlayer;
             // 6b. display who is first to play
-            textWaiting.textContent = `Waiting for ${activePlayer.getName()}'s move...`;
             // 6c. remove cells from previous game
             while (boardDisplay.firstChild) {
                 boardDisplay.removeChild(boardDisplay.lastChild);
@@ -212,7 +242,7 @@ const displayController = (() => {
             }
             const allButtons = [...boardDisplay.querySelectorAll("button")];
             // 6e. create function to update cell visually
-            const updateCell = (index, player) => {
+            const updateCell = (player, index) => {
                 const activeCell = allButtons[index];
                 activeCell.classList.add(player.getColor());
                 activeCell.textContent = player.getMarker();
@@ -232,37 +262,26 @@ const displayController = (() => {
                 textDialogEndGame.textContent = text;
                 displayDialogEndGame.showModal();
             };
-            // RANDOM PLAYYYY
-            const handleRandomPlayer = (player) => {
-                if (player.getType() === "random") {
-                    setTimeout(() => {
-                        const index = game.playRandomCell();
-                        updateCell(index, player);
-                        // allButtons[index].removeEventListener("click", handleClick)
-                        activePlayer = game.switchActivePlayer(player);
-                    }, 500);
-                }
-            }
-            handleRandomPlayer(activePlayer);
-
             // 6g. create function to place marker on board and check for gameover
             const handleClick = (e) => {
-                const activeIndex = allButtons.indexOf(e.currentTarget);
-                game.placeMarker(gameBoard.board[activeIndex], activePlayer);
-                updateCell(activeIndex, activePlayer);
-                activePlayer = game.switchActivePlayer(activePlayer);
-                /* const waitForClick = players.find(
-                            (player) => player.getName() !== activePlayer.getName()
-                        ); */
-                textWaiting.textContent = `Waiting for ${activePlayer.getName()}'s move...`;
-                const isGameOver = game.isGameOver();
-                const displayEndGameMessage = isGameOver.endGameMessage;
-                const displayWinningArray = isGameOver.winningArray;
-                if (displayEndGameMessage) {
-                    updateBoard(displayEndGameMessage, displayWinningArray);
+                const index = allButtons.indexOf(e.currentTarget);
+                const activePlayer = game.getActivePlayer();
+                const makeMove = game.makeMove(activePlayer, index);
+                updateCell(activePlayer, index);
+                textWaiting.textContent = `Waiting for ${game.getActivePlayer().getName()}'s move...`
+                if (makeMove.endGameMessage) {
+                    const { endGameMessage } = makeMove;
+                    const { winningArray } = makeMove;
+                    updateBoard(endGameMessage, winningArray);
+                } else if (makeMove.randomIndex) {
+                    const makeRandomMove = game.makeMove(player2, makeMove.randomIndex);
+                    setTimeout(() => updateCell(player2, makeMove.randomIndex), 500);
+                    console.log(makeRandomMove.endGameMessage);
+                    console.log(makeRandomMove.winningArray)
+                    
                 }
-                handleRandomPlayer(activePlayer);
-            };
+                
+            }
             // 6h. add single use event listener for each cell
             allButtons.forEach((btn) =>
                 btn.addEventListener("click", handleClick, { once: true })
