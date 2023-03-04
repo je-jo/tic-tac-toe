@@ -3,7 +3,8 @@
 const gameBoard = (() => {
     const board = [];
     const Cell = (marker, index) => ({ marker, index });
-    for (let i = 0; i <= 8; i += 1) {
+    const numCols = 3;
+    for (let i = 0; i <= ((numCols ** 2) - 1); i += 1) {
         const cell = Cell("", i);
         board.push(cell);
     }
@@ -31,12 +32,10 @@ const Player = (name, marker, color) => {
         score += 1;
     };
     const setName = (value) => {
-        if (value) {
-            // if empty leave default
+        if (value) { // if empty leave default
             // eslint-disable-next-line no-param-reassign
             name = value;
         }
-        return name;
     };
     const setType = (value) => {
         type = value;
@@ -67,10 +66,9 @@ players.push(player1, player2);
 // gameplay object
 
 const game = (() => {
-
-
     // check for gameover
-
+    let endGameMessage;
+    let winningArray;
     // 1. define winning combinations (index of cells)
     const winCombos = [
         [0, 1, 2],
@@ -95,8 +93,6 @@ const game = (() => {
     const isBoardFull = () => gameBoard.board.every((elem) => elem.marker);
     // 4. A function to check if any of the winning conditions are true, if true return end game message and winning array
     const isGameOver = () => {
-        let endGameMessage = false;
-        let winningArray = false;
         if (isThreeInARowIndex() !== -1) {
             const winningIndex = isThreeInARowIndex();
             // 5. If there is a winning array, extract the following from it:
@@ -112,13 +108,19 @@ const game = (() => {
             winningArray = winCombos[winningIndex];
             endGameMessage = `${winner.getName()} Won!`;
         }
-        if (isBoardFull()) {
-
+        else if (isBoardFull()) {
             endGameMessage = `It's a tie!`;
+            winningArray = false;
+        } else {
+            endGameMessage = false;
+            winningArray = false;
         }
-        return { endGameMessage, winningArray };
+
     };
 
+    const getEndGameMessage = () => endGameMessage
+
+    const getWinningArray = () => winningArray
 
 
 
@@ -145,32 +147,45 @@ const game = (() => {
         return randomIndex;
     };
 
-    const makeMove = (player, index) => {
-        player.placeMarker(index);
-        const checkEndGameObject = isGameOver();
-        const { endGameMessage } = checkEndGameObject;
-        const { winningArray } = checkEndGameObject;
-        if (endGameMessage) {
+    const endMove = () => {
+
+        isGameOver();
+        if (getEndGameMessage()) {
             startNewRound();
         } else {
-            activePlayer = switchActivePlayer(player);
+            activePlayer = switchActivePlayer(activePlayer);
         }
+    }
+
+    const makeRandomMove = (player, index) => {
+        player.placeMarker(index);
+        endMove()
+    }
+
+    const makeMove = (player, index) => {
+        player.placeMarker(index);
+        endMove()
         // if new active player is random, play random cell
         let randomIndex;
         if (activePlayer.getType() === "random") {
             randomIndex = getRandomCell();
-            makeMove(player2, randomIndex);
+            makeRandomMove(activePlayer, randomIndex)
         }
         console.table(gameBoard.board)
         return { endGameMessage, winningArray, randomIndex }
     }
+
+
+
+
 
     const getActivePlayer = () => activePlayer;
 
 
     return {
         switchActivePlayer,
-        isGameOver,
+        getEndGameMessage,
+        getWinningArray,
         getRandomCell,
         startNewRound,
         makeMove,
@@ -234,7 +249,7 @@ const displayController = (() => {
                 boardDisplay.removeChild(boardDisplay.lastChild);
             }
             // 6d. create 9 new  cells
-            for (let i = 0; i <= 8; i += 1) {
+            for (let i = 0; i <= gameBoard.board.length - 1; i += 1) {
                 const btn = document.createElement("button");
                 btn.classList.add("h1", "cell");
                 btn.textContent = "\u200B"; // to preserve height when there's no marker.
@@ -269,18 +284,20 @@ const displayController = (() => {
                 const makeMove = game.makeMove(activePlayer, index);
                 updateCell(activePlayer, index);
                 textWaiting.textContent = `Waiting for ${game.getActivePlayer().getName()}'s move...`
-                if (makeMove.endGameMessage) {
-                    const { endGameMessage } = makeMove;
-                    const { winningArray } = makeMove;
-                    updateBoard(endGameMessage, winningArray);
+                if (game.getEndGameMessage()) {
+                    updateBoard(game.getEndGameMessage(), game.getWinningArray());
                 } else if (makeMove.randomIndex) {
-                    const makeRandomMove = game.makeMove(player2, makeMove.randomIndex);
-                    setTimeout(() => updateCell(player2, makeMove.randomIndex), 500);
-                    console.log(makeRandomMove.endGameMessage);
-                    console.log(makeRandomMove.winningArray)
-                    
+                    // const makeRandomMove = game.makeMove(player2, makeMove.randomIndex);
+                    updateCell(player2, makeMove.randomIndex);
+                    console.log(game.getEndGameMessage())
+                    console.log(game.getWinningArray())
+                    const newendGameCheck = game.getEndGameMessage()
+                    console.log({newendGameCheck})
+                    if (game.getEndGameMessage()) {
+                        updateBoard(game.getEndGameMessage(), game.getWinningArray());
                 }
-                
+            }
+
             }
             // 6h. add single use event listener for each cell
             allButtons.forEach((btn) =>
