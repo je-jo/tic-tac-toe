@@ -165,6 +165,7 @@ p {
 }
 
 .display-player-name {
+  font-weight: bolder;
   text-decoration: underline;
   text-decoration-thickness: 12px;
   text-underline-offset: -6px;

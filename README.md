@@ -1,5 +1,3 @@
-WIP
-
 # The Odin Project - Tic Tac Toe
 
 A classic Tic Tac Toe game you can play in your browser. Built using JavaScript, HTML, and Sass for [The Odin Project](https://www.theodinproject.com).
@@ -50,7 +48,10 @@ The project's purpose is to get familiar with the concepts of modules and factor
 
 ### Continued Development
 
-- [ ] Create AI so that a player can play against the computer.
+Create AI so that a player can play against the computer.
+
+- [x] Get a computer to make a random legal move.
+- [ ] Create unbeatable AI
 
 ### Useful resources
 
@@ -62,7 +63,7 @@ The project's purpose is to get familiar with the concepts of modules and factor
 - [google web fonts helper](https://gwfh.mranftl.com/fonts) - A Hassle-Free Way to Self-Host Google Fonts.
 - [Paraiso colors](https://github.com/je-jo/paraiso-colors)
 - [Favicon Generator](https://favicon.io/favicon-generator/)
-- [Frontend Mentor Tic Tac Toe game](https://www.frontendmentor.io/challenges/tic-tac-toe-game-Re7ZF_E2v) - Design inspired by Frontend Mentor Tic Tac Toe challenge.
+- [Frontend Mentor Tic Tac Toe game](https://www.frontendmentor.io/challenges/tic-tac-toe-game-Re7ZF_E2v) - Design heavily inspired by Frontend Mentor Tic Tac Toe challenge.
 
 ## Author
 
