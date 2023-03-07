@@ -20,12 +20,6 @@ form > * {
     }
 }
 
-form > button {
-    @media(min-width: 48rem) {
-        grid-column: span 2;
-    }
-}
-
 fieldset {
     display: grid;
     gap: 0.8rem;
@@ -69,7 +63,9 @@ input[type="radio"]:checked + label {
 }
 
 form > button {
-    grid-column: 1 /-1;
     min-height: 2.5em;
     box-shadow: inset 0 -0.2em 0 change-color($color: $button-bg-color, $lightness: 40%);
+    @media(min-width: 48rem) {
+        grid-column: span 2;
+    }
 }
