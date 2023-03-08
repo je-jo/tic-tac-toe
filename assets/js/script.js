@@ -32,7 +32,7 @@ const Player = (name, marker, color) => {
         score += 1;
     };
     const setName = (value) => {
-        if (value) { // if empty leave default
+        if (value) {      // if empty leave default
             // eslint-disable-next-line no-param-reassign
             name = value;
         }
@@ -66,7 +66,6 @@ players.push(player1, player2);
 // C. GAMEPLAY OBJECT
 
 const game = (() => {
-
     // ========= CHECK FOR GAMEOVER ============ //
 
     let endGameMessage;
@@ -109,8 +108,7 @@ const game = (() => {
             // 5d. and the indexes of winning cells for styling
             winningArray = winCombos[winningIndex];
             endGameMessage = `${winner.getName()} Won!`;
-        }
-        else if (isBoardFull()) {
+        } else if (isBoardFull()) {
             endGameMessage = `It's a tie!`;
             winningArray = false;
         } else {
@@ -119,8 +117,8 @@ const game = (() => {
         }
     };
 
-    const getEndGameMessage = () => endGameMessage
-    const getWinningArray = () => winningArray
+    const getEndGameMessage = () => endGameMessage;
+    const getWinningArray = () => winningArray;
 
     // ============== HANDLE RANDOM PLAY =============== //
 
@@ -132,10 +130,9 @@ const game = (() => {
         const randomFromEmptyCells = Math.floor(Math.random() * emptyCells.length);
         const random = emptyCells[randomFromEmptyCells].index;
         return random;
-    }
+    };
 
     // =============== HANDLE ACTIVE PLAYER ============ //
-
 
     const switchActivePlayer = (active) =>
         active === players[0] ? players[1] : players[0];
@@ -144,7 +141,7 @@ const game = (() => {
     let activePlayer = globalActivePlayer;
 
     // ================ START ROUND ==================== //
-    
+
     const startNewRound = () => {
         gameBoard.clearBoard();
         randomIndex = null;
@@ -155,7 +152,7 @@ const game = (() => {
             activePlayer.placeMarker(randomIndex);
             activePlayer = switchActivePlayer(activePlayer);
         }
-    }
+    };
 
     // ================ HANDLE PLAYERS' MOVES ================ //
 
@@ -166,7 +163,7 @@ const game = (() => {
         if (getEndGameMessage()) {
             startNewRound();
         }
-    }
+    };
 
     const makeMove = (player, index) => {
         player.placeMarker(index);
@@ -180,33 +177,30 @@ const game = (() => {
             randomIndex = getRandomCell();
             makeRandomMove(activePlayer, randomIndex);
         }
-    }
+    };
 
     // RETURN VALUES FOR DOM MANIPULATION
 
     const getActivePlayer = () => activePlayer;
     const getRandomIndex = () => randomIndex;
 
-
     return {
         getEndGameMessage,
         getWinningArray,
         getRandomIndex,
-        getActivePlayer, 
-        makeMove
+        getActivePlayer,
+        makeMove,
     };
 })();
 
 // D. MODULE FOR DISPLAY CONTROLLER WITH FUNCTION TO RENDER GAMEBOARD OBJECT
 
 const displayController = (() => {
-
     // main display variables
     const startPage = document.getElementById("start-page");
     const gamePage = document.getElementById("game-page");
 
     const renderGamePage = () => {
-
         const header = document.querySelector("h1");
         const displayDialogEndGame = document.getElementById("dialog-end-game");
         const textDialogEndGame = document.getElementById("text-end-game");
@@ -236,8 +230,10 @@ const displayController = (() => {
         // 4. display currently active player
         const textWaiting = gameDisplay.getElementById("text-waiting");
         const updateTextActive = () => {
-            textWaiting.textContent = `Waiting for ${game.getActivePlayer().getName()}'s move...`
-        }
+            textWaiting.textContent = `Waiting for ${game
+                .getActivePlayer()
+                .getName()}'s move...`;
+        };
 
         // 5. Display score and update after every game over
         const displayScores = [...gameDisplay.querySelectorAll(".display-score")];
@@ -282,15 +278,12 @@ const displayController = (() => {
                     const winnerButtons = allButtons.filter((_btn, index) =>
                         winnerArr.includes(index)
                     );
-                    winnerButtons.forEach((btn) => {
-                        btn.classList.add("winning-array");
-                    });
+                    winnerButtons.forEach((btn) => btn.classList.add("winning-array"));
                 }
                 textWaiting.textContent = "\u200B"; // hide whose turn it is because game is over
                 updateDisplayScores();
                 textDialogEndGame.textContent = text;
-                setTimeout(() => displayDialogEndGame.showModal(), 600)
-                ;
+                setTimeout(() => displayDialogEndGame.showModal(), 550);
             };
             // 6g. function to get index to play and update cell
             const handleClick = (e) => {
@@ -300,17 +293,16 @@ const displayController = (() => {
                 updateCell(activePlayer, index);
                 updateTextActive();
                 if (game.getEndGameMessage()) {
-                    updateBoard(game.getEndGameMessage(), game.getWinningArray())
+                    updateBoard(game.getEndGameMessage(), game.getWinningArray());
                 } else if (game.getRandomIndex()) {
                     const random = game.getRandomIndex();
+                    setTimeout(() => updateCell(player2, random), 500);
                     allButtons[random].removeEventListener("click", handleClick);
-                    setTimeout(() => updateCell(player2, random), 400)
-                    if (game.getEndGameMessage()) {
-                        updateBoard(game.getEndGameMessage(), game.getWinningArray())
-                    }
+                    /* if (game.getEndGameMessage()) {
+                        updateBoard(game.getEndGameMessage(), game.getWinningArray());
+                    } */
                 }
-
-            }
+            };
             // 6h. add single use event listener for each cell
             allButtons.forEach((btn) =>
                 btn.addEventListener("click", handleClick, { once: true })
