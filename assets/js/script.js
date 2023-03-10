@@ -175,7 +175,9 @@ const game = (() => {
         // if new active player is random, play random cell
         else if (activePlayer.getType() === "random") {
             randomIndex = getRandomCell();
-            makeRandomMove(activePlayer, randomIndex);
+            setTimeout(() => {
+                makeRandomMove(activePlayer, randomIndex);
+            }, 250);
         }
     };
 
@@ -268,9 +270,9 @@ const displayController = (() => {
                 activeCell.classList.add(player.getColor());
             };
             // 6e. if first player is random update randomly played cell
-            if (game.getRandomIndex()) {
+            if (game.getRandomIndex() || game.getRandomIndex() === 0) {
                 const randomIndex = game.getRandomIndex();
-                setTimeout(() => updateCell(player2, randomIndex), 400);
+                updateCell(player2, randomIndex)
             }
             // 6f. function to update board on end game
             const updateBoard = (text, winnerArr) => {
@@ -278,12 +280,16 @@ const displayController = (() => {
                     const winnerButtons = allButtons.filter((_btn, index) =>
                         winnerArr.includes(index)
                     );
-                    winnerButtons.forEach((btn) => btn.classList.add("winning-array"));
+                    setTimeout(() => {
+                        winnerButtons.forEach((btn) => btn.classList.add("winning-array"));
+                    }, 200);
                 }
                 textWaiting.textContent = "\u200B"; // hide whose turn it is because game is over
                 updateDisplayScores();
                 textDialogEndGame.textContent = text;
-                setTimeout(() => displayDialogEndGame.showModal(), 550);
+                setTimeout(() => {
+                    displayDialogEndGame.showModal();
+                }, 400);
             };
             // 6g. function to get index to play and update cell
             const handleClick = (e) => {
@@ -294,13 +300,16 @@ const displayController = (() => {
                 updateTextActive();
                 if (game.getEndGameMessage()) {
                     updateBoard(game.getEndGameMessage(), game.getWinningArray());
-                } else if (game.getRandomIndex()) {
+                } else if (game.getRandomIndex() || game.getRandomIndex() === 0) {
                     const random = game.getRandomIndex();
-                    setTimeout(() => updateCell(player2, random), 500);
+                    setTimeout(() => {
+                        updateTextActive();
+                        updateCell(player2, random);
+                        if (game.getEndGameMessage()) {
+                            updateBoard(game.getEndGameMessage(), game.getWinningArray());
+                        }
+                    }, 350);
                     allButtons[random].removeEventListener("click", handleClick);
-                    /* if (game.getEndGameMessage()) {
-                        updateBoard(game.getEndGameMessage(), game.getWinningArray());
-                    } */
                 }
             };
             // 6h. add single use event listener for each cell
